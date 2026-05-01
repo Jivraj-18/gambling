@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poker AI Replay</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #121212;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Header */
+  #header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 20px;
+    background: #1e1e1e;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+  }
+  #header h1 { font-size: 15px; color: #c084fc; letter-spacing: 1px; }
+  #run-select {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 13px;
+    max-width: 380px;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .badge-ai     { background: #1a3a1a; color: #4ade80; border: 1px solid #2d6a2d; }
+  .badge-manual { background: #1a1a3a; color: #60a5fa; border: 1px solid #2d2d6a; }
+  #move-counter { margin-left: auto; font-size: 12px; color: #666; }
+
+  /* Main layout */
+  #main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Game panel */
+  #game-panel {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  /* Board cards */
+  #board { display: flex; gap: 8px; flex-wrap: wrap; }
+  .card {
+    background: #f5f5f5;
+    color: #111;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 44px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .card.red { color: #e53e3e; }
+  .card.empty { background: #2a2a2a; color: #444; border: 1px dashed #333; }
+
+  /* Pot */
+  #pot { font-size: 24px; font-weight: bold; color: #fbbf24; }
+
+  /* Players */
+  #players { display: flex; flex-direction: column; gap: 8px; }
+  .player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .player.hero { border-color: #4ade80; }
+  .player-name  { font-size: 13px; flex: 1; }
+  .player-stack { color: #fbbf24; font-size: 13px; min-width: 60px; text-align: right; }
+  .player-cards { display: flex; gap: 4px; }
+  .player-cards .card { font-size: 13px; padding: 3px 7px; min-width: 32px; }
+
+  /* Recent actions */
+  #actions-list { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; }
+  .action-row { font-size: 12px; color: #888; padding: 3px 0; border-bottom: 1px solid #222; }
+
+  /* AI panel */
+  #ai-panel {
+    width: 360px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-left: 1px solid #333;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  #ai-panel.hidden { display: none; }
+
+  .decision-wrap { display: flex; align-items: center; gap: 10px; }
+  .decision-badge {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 14px;
+    border-radius: 5px;
+  }
+  .FOLD    { background: #7f1d1d; color: #fca5a5; }
+  .CALL    { background: #1e3a5f; color: #93c5fd; }
+  .RAISE   { background: #78350f; color: #fcd34d; }
+  .CHECK   { background: #14532d; color: #86efac; }
+  .PENDING { background: #333; color: #aaa; }
+
+  .amount-tag { font-size: 13px; color: #fbbf24; }
+  .reasoning  { font-size: 13px; line-height: 1.7; color: #ccc; }
+
+  details { border: 1px solid #2a2a2a; border-radius: 6px; }
+  summary {
+    cursor: pointer;
+    padding: 8px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    user-select: none;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: '▶ '; font-size: 9px; }
+  details[open] summary::before { content: '▼ '; }
+  .code-box {
+    background: #0d0d0d;
+    padding: 10px 12px;
+    font-size: 11px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: #888;
+    max-height: 220px;
+    overflow-y: auto;
+    border-top: 1px solid #2a2a2a;
+  }
+
+  /* Controls */
+  #controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: #1e1e1e;
+    border-top: 1px solid #333;
+    flex-shrink: 0;
+  }
+  button {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    transition: background 0.15s;
+  }
+  button:hover:not(:disabled) { background: #383838; }
+  button:disabled { opacity: 0.3; cursor: not-allowed; }
+  #btn-play { background: #5b21b6; border-color: #7c3aed; color: #fff; }
+  #btn-play:hover:not(:disabled) { background: #6d28d9; }
+
+  .speed-wrap { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .speed-wrap label { font-size: 12px; color: #666; }
+  input[type="range"] { accent-color: #a78bfa; width: 100px; }
+
+  /* Empty / loading state */
+  #empty {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px;
+    background: #121212;
+    z-index: 10;
+  }
+  #empty h2 { color: #c084fc; font-size: 18px; }
+  #empty p  { color: #555; font-size: 13px; text-align: center; line-height: 1.7; }
+  #file-input { display: none; }
+  label.upload-btn {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 9px 20px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  label.upload-btn:hover { background: #383838; }
+</style>
+</head>
+<body>
+
+<!-- Empty state -->
+<div id="empty">
+  <h2>Poker AI Replay</h2>
+  <p>Serve this folder with a local HTTP server to auto-load runs.<br>
+     Or upload a <code>run_*.json</code> file directly.</p>
+  <input type="file" id="file-input" accept=".json">
+  <label class="upload-btn" for="file-input">Open run file</label>
+</div>
+
+<!-- Header -->
+<div id="header" style="display:none">
+  <h1>♠ Poker AI Replay</h1>
+  <select id="run-select"></select>
+  <span id="run-badge" class="badge"></span>
+  <span id="move-counter"></span>
+</div>
+
+<!-- Main -->
+<div id="main" style="display:none">
+
+  <div id="game-panel">
+    <div>
+      <div class="label">Board</div>
+      <div id="board"></div>
+    </div>
+    <div>
+      <div class="label">Pot</div>
+      <div id="pot">—</div>
+    </div>
+    <div>
+      <div class="label">Players</div>
+      <div id="players"></div>
+    </div>
+    <div>
+      <div class="label">Recent Actions</div>
+      <div id="actions-list"></div>
+    </div>
+  </div>
+
+  <div id="ai-panel">
+    <div>
+      <div class="label">AI Decision</div>
+      <div class="decision-wrap">
+        <span id="ai-badge" class="decision-badge PENDING">—</span>
+        <span id="ai-amount" class="amount-tag"></span>
+      </div>
+    </div>
+    <div id="ai-reasoning" class="reasoning"></div>
+    <details>
+      <summary>Prompt sent to Gemini</summary>
+      <div id="ai-prompt" class="code-box"></div>
+    </details>
+    <details>
+      <summary>Raw Gemini response</summary>
+      <div id="ai-raw" class="code-box"></div>
+    </details>
+  </div>
+
+</div>
+
+<!-- Controls -->
+<div id="controls" style="display:none">
+  <button id="btn-prev">◀ Prev</button>
+  <button id="btn-play">▶ Play</button>
+  <button id="btn-next">Next ▶</button>
+  <button id="btn-end">⏭ End</button>
+  <div class="speed-wrap">
+    <label id="speed-label">1×</label>
+    <input type="range" id="speed" min="0.25" max="4" step="0.25" value="1">
+  </div>
+</div>
+
+<script>
+let log = [], idx = 0, playing = false, timer = null, isAiRun = false;
+
+// ── Card renderer ──────────────────────────────────────────────
+function card(c) {
+  if (!c) return '<div class="card empty">?</div>';
+  const s = c.slice(-1);
+  const red = ['♥','♦','h','d'].includes(s.toLowerCase());
+  return `<div class="card${red ? ' red' : ''}">${c}</div>`;
+}
+
+// ── Render one log entry ───────────────────────────────────────
+function render(entry) {
+  const gs = entry.game_state || {};
+  const ai = entry.ai_metadata || {};
+
+  // Board
+  const board = gs.board || gs.communityCards || [];
+  document.getElementById('board').innerHTML =
+    board.length ? board.map(card).join('') : '<div class="card empty">—</div>';
+
+  // Pot
+  document.getElementById('pot').textContent = gs.pot != null ? gs.pot : '—';
+
+  // Players
+  const players = gs.players || [];
+  document.getElementById('players').innerHTML = players.map(p => {
+    const isHero = p.you || (p.id && p.id === gs.heroId);
+    return `<div class="player${isHero ? ' hero' : ''}">
+      <span class="player-name">${p.name || p.id || 'Player'}${isHero ? ' ★' : ''}</span>
+      <div class="player-cards">${(p.cards || []).map(card).join('')}</div>
+      <span class="player-stack">${p.stack ?? ''}</span>
+    </div>`;
+  }).join('') || '<div style="color:#555;font-size:13px">No player data yet</div>';
+
+  // Recent actions
+  const actions = gs.recentActions || [];
+  document.getElementById('actions-list').innerHTML =
+    actions.slice(-8).reverse().map(a =>
+      `<div class="action-row">${typeof a === 'string' ? a : JSON.stringify(a)}</div>`
+    ).join('') || '<div style="color:#555;font-size:12px">—</div>';
+
+  // AI panel
+  if (isAiRun) {
+    const dec = ai.decision || entry.actual_action || 'PENDING';
+    const badge = document.getElementById('ai-badge');
+    badge.textContent = dec;
+    badge.className = `decision-badge ${dec}`;
+    document.getElementById('ai-amount').textContent = ai.amount != null ? `${ai.amount}` : '';
+    document.getElementById('ai-reasoning').textContent = ai.reasoning || '—';
+    document.getElementById('ai-prompt').textContent = ai.prompt || '—';
+    document.getElementById('ai-raw').textContent = ai.raw || '—';
+  }
+
+  // Counter
+  document.getElementById('move-counter').textContent = `Move ${idx + 1} / ${log.length}`;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === log.length - 1;
+  document.getElementById('btn-end').disabled  = idx === log.length - 1;
+}
+
+function go(i) {
+  idx = Math.max(0, Math.min(log.length - 1, i));
+  render(log[idx]);
+}
+
+// ── Playback ───────────────────────────────────────────────────
+function startPlay() {
+  playing = true;
+  document.getElementById('btn-play').textContent = '⏸ Pause';
+  const step = () => {
+    if (!playing || idx >= log.length - 1) { stopPlay(); return; }
+    go(idx + 1);
+    const speed = parseFloat(document.getElementById('speed').value);
+    timer = setTimeout(step, 1500 / speed);
+  };
+  step();
+}
+function stopPlay() {
+  playing = false;
+  clearTimeout(timer);
+  document.getElementById('btn-play').textContent = '▶ Play';
+}
+
+// ── Load a run ─────────────────────────────────────────────────
+function loadRun(data, meta) {
+  log = data;
+  idx = 0;
+  isAiRun = meta?.ai ?? data.some(e => e.ai_metadata);
+  document.getElementById('ai-panel').classList.toggle('hidden', !isAiRun);
+
+  const badge = document.getElementById('run-badge');
+  badge.textContent = isAiRun ? 'AI' : 'Manual';
+  badge.className   = `badge ${isAiRun ? 'badge-ai' : 'badge-manual'}`;
+
+  document.getElementById('empty').style.display   = 'none';
+  document.getElementById('header').style.display  = 'flex';
+  document.getElementById('main').style.display    = 'flex';
+  document.getElementById('controls').style.display = 'flex';
+  go(0);
+}
+
+// ── Run selector ───────────────────────────────────────────────
+async function populateSelector(manifest) {
+  const sel = document.getElementById('run-select');
+  sel.innerHTML = manifest.map(m => {
+    const d  = new Date(m.timestamp).toLocaleString();
+    const tag = m.ai ? `AI·${m.mode}` : 'Manual';
+    return `<option value="${m.file}">[${tag}] ${d} (${m.entries} moves)</option>`;
+  }).join('');
+  sel.onchange = () => fetchAndLoad(sel.value, manifest.find(m => m.file === sel.value));
+  if (manifest.length) fetchAndLoad(manifest[0].file, manifest[0]);
+}
+
+async function fetchAndLoad(file, meta) {
+  const res  = await fetch(`data/${file}`);
+  const data = await res.json();
+  loadRun(data, meta);
+}
+
+// ── Controls ───────────────────────────────────────────────────
+document.getElementById('btn-prev').onclick = () => { stopPlay(); go(idx - 1); };
+document.getElementById('btn-next').onclick = () => { stopPlay(); go(idx + 1); };
+document.getElementById('btn-end').onclick  = () => { stopPlay(); go(log.length - 1); };
+document.getElementById('btn-play').onclick = () => playing ? stopPlay() : startPlay();
+document.getElementById('speed').oninput = e =>
+  document.getElementById('speed-label').textContent = `${e.target.value}×`;
+
+// ── File upload fallback ───────────────────────────────────────
+document.getElementById('file-input').onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = evt => loadRun(JSON.parse(evt.target.result), null);
+  reader.readAsText(file);
+};
+
+// ── Auto-load from data/manifest.json ─────────────────────────
+fetch('data/manifest.json')
+  .then(r => r.json())
+  .then(populateSelector)
+  .catch(() => { /* no server, show upload prompt */ });
+</script>
+</body>
+</html>

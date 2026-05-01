@@ -1,0 +1,244 @@
+[
+  {
+    "timestamp": "2026-04-30T07:59:28.783Z",
+    "game_state": {
+      "recentActions": [],
+      "pot": 10,
+      "players": {
+        "01MRZiidix": {
+          "winCount": 0,
+          "quitCount": 0,
+          "id": "01MRZiidix",
+          "status": "standingUp",
+          "name": "Jivraj",
+          "stack": 22,
+          "dAC": false
+        },
+        "fvVnnxOCqD": {
+          "winCount": 3,
+          "quitCount": 0,
+          "id": "fvVnnxOCqD",
+          "status": "inGame",
+          "name": "skirree1010",
+          "stack": 169
+        },
+        "sraL94-LeF": {
+          "winCount": 2,
+          "quitCount": 0,
+          "id": "sraL94-LeF",
+          "status": "standingUp",
+          "name": "Toniroi 3.1👽",
+          "stack": 138,
+          "disconnectedSince": 1777535581377,
+          "dAC": false
+        },
+        "h81d4FAkUb": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "h81d4FAkUb",
+          "status": "inGame",
+          "name": "Haimshely",
+          "stack": 185
+        },
+        "j8Q-DeV37R": {
+          "winCount": 3,
+          "quitCount": 1,
+          "id": "j8Q-DeV37R",
+          "status": "standingUp",
+          "name": "TX Holdem 1",
+          "stack": 100,
+          "dAC": false
+        },
+        "PCpJgDFOHL": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "PCpJgDFOHL",
+          "status": "inGame",
+          "name": "sodaawolation",
+          "stack": 43
+        },
+        "_ebQJ8rvor": {
+          "winCount": 0,
+          "quitCount": 0,
+          "id": "_ebQJ8rvor",
+          "status": "inGame",
+          "name": "Gildin",
+          "stack": 94
+        },
+        "vsXIh5TnW5": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "vsXIh5TnW5",
+          "status": "inGame",
+          "name": "Quacky_55555",
+          "stack": 134
+        }
+      },
+      "seats": [
+        [
+          1,
+          "j8Q-DeV37R"
+        ],
+        [
+          3,
+          "fvVnnxOCqD"
+        ],
+        [
+          4,
+          "_ebQJ8rvor"
+        ],
+        [
+          5,
+          "sraL94-LeF"
+        ],
+        [
+          6,
+          "PCpJgDFOHL"
+        ],
+        [
+          7,
+          "01MRZiidix"
+        ],
+        [
+          9,
+          "vsXIh5TnW5"
+        ],
+        [
+          10,
+          "h81d4FAkUb"
+        ]
+      ],
+      "heroId": "01MRZiidix"
+    },
+    "ai_metadata": {
+      "prompt": "Hole cards: undefined\nBoard: undefined\nPot: 10 | Hero stack: undefined\nPlayers: {\"01MRZiidix\":{\"winCount\":0,\"quitCount\":0,\"id\":\"01MRZiidix\",\"status\":\"standingUp\",\"name\":\"Jivraj\",\"stack\":22,\"dAC\":false},\"fvVnnxOCqD\":{\"winCount\":3,\"quitCount\":0,\"id\":\"fvVnnxOCqD\",\"status\":\"inGame\",\"name\":\"skirree1010\",\"stack\":169},\"sraL94-LeF\":{\"winCount\":2,\"quitCount\":0,\"id\":\"sraL94-LeF\",\"status\":\"standingUp\",\"name\":\"Toniroi 3.1👽\",\"stack\":138,\"disconnectedSince\":1777535581377,\"dAC\":false},\"h81d4FAkUb\":{\"winCount\":1,\"quitCount\":0,\"id\":\"h81d4FAkUb\",\"status\":\"inGame\",\"name\":\"Haimshely\",\"stack\":185},\"j8Q-DeV37R\":{\"winCount\":3,\"quitCount\":1,\"id\":\"j8Q-DeV37R\",\"status\":\"standingUp\",\"name\":\"TX Holdem 1\",\"stack\":100,\"dAC\":false},\"PCpJgDFOHL\":{\"winCount\":1,\"quitCount\":0,\"id\":\"PCpJgDFOHL\",\"status\":\"inGame\",\"name\":\"sodaawolation\",\"stack\":43},\"_ebQJ8rvor\":{\"winCount\":0,\"quitCount\":0,\"id\":\"_ebQJ8rvor\",\"status\":\"inGame\",\"name\":\"Gildin\",\"stack\":94},\"vsXIh5TnW5\":{\"winCount\":1,\"quitCount\":0,\"id\":\"vsXIh5TnW5\",\"status\":\"inGame\",\"name\":\"Quacky_55555\",\"stack\":134}}\nRecent actions: []",
+      "raw": "{\"decision\":\"FOLD\",\"amount\":0,\"reasoning\":\"No hole cards provided, folding by default.\"}",
+      "decision": "FOLD",
+      "amount": 0,
+      "reasoning": "No hole cards provided, folding by default."
+    },
+    "actual_action": "PENDING",
+    "mode": "advisory"
+  },
+  {
+    "timestamp": "2026-04-30T08:00:39.448Z",
+    "game_state": {
+      "recentActions": [],
+      "pot": 10,
+      "players": {
+        "01MRZiidix": {
+          "winCount": 0,
+          "quitCount": 0,
+          "id": "01MRZiidix",
+          "status": "standingUp",
+          "name": "Jivraj",
+          "stack": 22,
+          "dAC": false
+        },
+        "fvVnnxOCqD": {
+          "winCount": 3,
+          "quitCount": 0,
+          "id": "fvVnnxOCqD",
+          "status": "inGame",
+          "name": "skirree1010",
+          "stack": 169
+        },
+        "sraL94-LeF": {
+          "winCount": 2,
+          "quitCount": 0,
+          "id": "sraL94-LeF",
+          "status": "standingUp",
+          "name": "Toniroi 3.1👽",
+          "stack": 138,
+          "disconnectedSince": 1777535581377,
+          "dAC": false
+        },
+        "h81d4FAkUb": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "h81d4FAkUb",
+          "status": "inGame",
+          "name": "Haimshely",
+          "stack": 185
+        },
+        "j8Q-DeV37R": {
+          "winCount": 3,
+          "quitCount": 1,
+          "id": "j8Q-DeV37R",
+          "status": "standingUp",
+          "name": "TX Holdem 1",
+          "stack": 100,
+          "dAC": false
+        },
+        "PCpJgDFOHL": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "PCpJgDFOHL",
+          "status": "inGame",
+          "name": "sodaawolation",
+          "stack": 43
+        },
+        "_ebQJ8rvor": {
+          "winCount": 0,
+          "quitCount": 0,
+          "id": "_ebQJ8rvor",
+          "status": "inGame",
+          "name": "Gildin",
+          "stack": 94
+        },
+        "vsXIh5TnW5": {
+          "winCount": 1,
+          "quitCount": 0,
+          "id": "vsXIh5TnW5",
+          "status": "inGame",
+          "name": "Quacky_55555",
+          "stack": 134
+        }
+      },
+      "seats": [
+        [
+          1,
+          "j8Q-DeV37R"
+        ],
+        [
+          3,
+          "fvVnnxOCqD"
+        ],
+        [
+          4,
+          "_ebQJ8rvor"
+        ],
+        [
+          5,
+          "sraL94-LeF"
+        ],
+        [
+          6,
+          "PCpJgDFOHL"
+        ],
+        [
+          7,
+          "01MRZiidix"
+        ],
+        [
+          9,
+          "vsXIh5TnW5"
+        ],
+        [
+          10,
+          "h81d4FAkUb"
+        ]
+      ],
+      "heroId": "01MRZiidix"
+    },
+    "ai_metadata": {
+      "prompt": "Hole cards: undefined\nBoard: undefined\nPot: 10 | Hero stack: undefined\nPlayers: {\"01MRZiidix\":{\"winCount\":0,\"quitCount\":0,\"id\":\"01MRZiidix\",\"status\":\"standingUp\",\"name\":\"Jivraj\",\"stack\":22,\"dAC\":false},\"fvVnnxOCqD\":{\"winCount\":3,\"quitCount\":0,\"id\":\"fvVnnxOCqD\",\"status\":\"inGame\",\"name\":\"skirree1010\",\"stack\":169},\"sraL94-LeF\":{\"winCount\":2,\"quitCount\":0,\"id\":\"sraL94-LeF\",\"status\":\"standingUp\",\"name\":\"Toniroi 3.1👽\",\"stack\":138,\"disconnectedSince\":1777535581377,\"dAC\":false},\"h81d4FAkUb\":{\"winCount\":1,\"quitCount\":0,\"id\":\"h81d4FAkUb\",\"status\":\"inGame\",\"name\":\"Haimshely\",\"stack\":185},\"j8Q-DeV37R\":{\"winCount\":3,\"quitCount\":1,\"id\":\"j8Q-DeV37R\",\"status\":\"standingUp\",\"name\":\"TX Holdem 1\",\"stack\":100,\"dAC\":false},\"PCpJgDFOHL\":{\"winCount\":1,\"quitCount\":0,\"id\":\"PCpJgDFOHL\",\"status\":\"inGame\",\"name\":\"sodaawolation\",\"stack\":43},\"_ebQJ8rvor\":{\"winCount\":0,\"quitCount\":0,\"id\":\"_ebQJ8rvor\",\"status\":\"inGame\",\"name\":\"Gildin\",\"stack\":94},\"vsXIh5TnW5\":{\"winCount\":1,\"quitCount\":0,\"id\":\"vsXIh5TnW5\",\"status\":\"inGame\",\"name\":\"Quacky_55555\",\"stack\":134}}\nRecent actions: []",
+      "raw": "{\"decision\":\"FOLD\",\"amount\":0,\"reasoning\":\"No hole cards provided, folding by default.\"}",
+      "decision": "FOLD",
+      "amount": 0,
+      "reasoning": "No hole cards provided, folding by default."
+    },
+    "actual_action": "PENDING",
+    "mode": "advisory"
+  }
+]

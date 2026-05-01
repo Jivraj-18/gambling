@@ -1,0 +1,23 @@
+[
+  {
+    "file": "run_2026-04-30T09-34-51-960Z.json",
+    "timestamp": "2026-04-30T09:34:51.960Z",
+    "ai": true,
+    "mode": "advisory",
+    "entries": 14
+  },
+  {
+    "file": "run_2026-04-30T09-05-14-440Z.json",
+    "timestamp": "2026-04-30T09:05:14.440Z",
+    "ai": true,
+    "mode": "advisory",
+    "entries": 30
+  },
+  {
+    "file": "run_2026-04-30T07-57-08-925Z.json",
+    "timestamp": "2026-04-30T07:57:08.925Z",
+    "ai": true,
+    "mode": "advisory",
+    "entries": 2
+  }
+]
