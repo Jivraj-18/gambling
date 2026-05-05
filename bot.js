@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { writeFileSync, readFileSync, existsSync, mkdirSync, renameSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync, renameSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
 // --- CLI Args ---
@@ -9,10 +9,11 @@ const argv = process.argv.slice(2).reduce((acc, a) => {
   return { ...acc, [k]: v ?? true };
 }, {});
 
-const USE_AI = 'ai' in argv;
-const MODEL  = argv.model || 'gemini-3.1-pro-preview';
-const MODE   = argv.mode  || 'advisory';
-const URL    = argv.url   || 'https://www.pokernow.club';
+const USE_AI    = 'ai' in argv;
+const MODEL     = argv.model || 'gemini-3.1-pro-preview';
+const MODE      = argv.mode  || 'advisory';
+const URL       = argv.url   || 'https://www.pokernow.club';
+const MAX_HANDS = argv.hands ? parseInt(argv.hands) : 20;
 
 // --- Setup ---
 mkdirSync('data', { recursive: true });
@@ -22,47 +23,85 @@ const runId        = new Date().toISOString().replace(/[:.]/g, '-');
 const runFile      = join('data', `run_${runId}.json`);
 const manifestFile = join('data', 'manifest.json');
 const rawLogFile   = join('logs', `raw_${runId}.jsonl`);
-const runMeta      = { file: `run_${runId}.json`, timestamp: new Date().toISOString(), ai: USE_AI, mode: USE_AI ? MODE : null, entries: 0 };
-const entries      = [];
 
 function logRaw(event, data) {
-  const line = JSON.stringify({ timestamp: new Date().toISOString(), event, data }) + '\n';
-  writeFileSync(rawLogFile, line, { flag: 'a' });
+  writeFileSync(rawLogFile, JSON.stringify({ ts: new Date().toISOString(), event, data }) + '\n', { flag: 'a' });
 }
 
-function save() {
-  writeFileSync(`${runFile}.tmp`, JSON.stringify(entries, null, 2));
+// --- Run Data (grouped by hand) ---
+const runMeta = { file: `run_${runId}.json`, timestamp: new Date().toISOString(), ai: USE_AI, mode: USE_AI ? MODE : null, model: USE_AI ? MODEL : null, hands: 0, decisions: 0 };
+let hands            = [];
+let currentHandId    = 1;
+let currentDecisions = [];
+let currentHandCards = null;
+
+function closeCurrentHand() {
+  if (!currentDecisions.length) return;
+  const hand = { handId: currentHandId++, holeCards: currentHandCards, startedAt: currentDecisions[0].timestamp, decisions: currentDecisions };
+  hands.push(hand);
+  currentDecisions = [];
+  currentHandCards = null;
+  if (gemini) analyzeHand(hand).catch(e => console.error('[Analysis]', e.message));
+  if (hands.length >= MAX_HANDS) {
+    console.log(`[Bot] Reached ${MAX_HANDS} hands — stopping.`);
+    save();
+    process.exit(0);
+  }
+}
+
+async function analyzeHand(hand) {
+  if (!hand.decisions.length) return;
+  const lines = hand.decisions.map((d, i) => {
+    const gs = d.game_state || {};
+    const ai = d.ai_metadata || {};
+    return `  ${i+1}. [${d.street}] ${ai.decision || d.actual_action || '?'} | pot=${gs.pot} board=${gs.board?.join(' ')||'none'} | ${ai.reasoning || '—'}`;
+  }).join('\n');
+
+  const prompt = `Post-hand analysis. Hero held ${hand.holeCards?.join(' ')}.
+Decisions:
+${lines}
+
+For each decision: was it correct, or was there a better play?
+Respond JSON only: {"steps":[{"verdict":"correct|questionable|mistake","note":"1 sentence"}],"overall":"Well played|Acceptable|Missed opportunity","summary":"2 sentences max"}`;
+
+  const res  = await gemini.generateContent(prompt);
+  const raw  = res.response.text();
+  const parsed = JSON.parse(raw.match(/\{[\s\S]*\}/)[0]);
+  hand.analysis = parsed;
+  console.log(`[Analysis] Hand ${hand.handId}: ${parsed.overall}`);
+  save();
+}
+
+function save(entry) {
+  if (entry) currentDecisions.push(entry);
+  const allHands = currentDecisions.length
+    ? [...hands, { handId: currentHandId, holeCards: currentHandCards, startedAt: currentDecisions[0]?.timestamp, decisions: currentDecisions }]
+    : [...hands];
+  const runData = { meta: runMeta, hands: allHands };
+  writeFileSync(`${runFile}.tmp`, JSON.stringify(runData, null, 2));
   renameSync(`${runFile}.tmp`, runFile);
-  runMeta.entries = entries.length;
+  runMeta.hands     = allHands.length;
+  runMeta.decisions = allHands.reduce((s, h) => s + h.decisions.length, 0);
   const manifest = existsSync(manifestFile) ? JSON.parse(readFileSync(manifestFile, 'utf8')) : [];
   const i = manifest.findIndex(m => m.file === runMeta.file);
   i >= 0 ? (manifest[i] = runMeta) : manifest.unshift(runMeta);
+  while (manifest.length > 20) {
+    const old = manifest.pop();
+    try { unlinkSync(join('data', old.file)); } catch {}
+  }
   writeFileSync(manifestFile, JSON.stringify(manifest, null, 2));
 }
 
-// --- Game State (from WebSocket) ---
-let gameState    = { recentActions: [], players: {}, pot: 0 };
-let heroId       = null;
-let turnLock     = false;
-let gamePage     = null;
+// --- Game State (driven entirely by WebSocket) ---
+let gs = { board: [], pot: 0, holeCards: [], handName: null, players: {}, seats: [], tableBets: {}, cRPI: [], callAmount: 0, bigBlind: 2 };
+let heroId      = null;  // account ID — used for private pC card lookups
+let turnLock = false;
 
-// --- Session History ---
-let currentHand  = [];          // decisions made in the current hand
-let pastHands    = [];          // completed hands (last 5)
-let playerStats  = {};          // per-player: { folds, active, seen }
-let lastHoleCards = null;       // detect new hand when hole cards change
+// --- Session stats for Gemini context ---
+let playerStats = {};
+let pastHands   = [];     // last 5 completed hands for Gemini context
 
-function detectNewHand(holeCards) {
-  const key = JSON.stringify(holeCards);
-  if (lastHoleCards && lastHoleCards !== key && currentHand.length) {
-    pastHands.unshift({ decisions: currentHand });
-    if (pastHands.length > 5) pastHands.pop();
-    currentHand = [];
-  }
-  lastHoleCards = key;
-}
-
-function updatePlayerStats(players = []) {
+function updateStats(players = []) {
   for (const p of players) {
     if (!p.name) continue;
     if (!playerStats[p.name]) playerStats[p.name] = { folds: 0, active: 0, seen: 0 };
@@ -72,112 +111,88 @@ function updatePlayerStats(players = []) {
   }
 }
 
-function tendencySummary() {
-  return Object.entries(playerStats)
+function tendencies() {
+  const lines = Object.entries(playerStats)
     .filter(([, s]) => s.seen >= 3)
-    .map(([name, s]) => {
-      const foldPct   = Math.round(s.folds  / s.seen * 100);
-      const activePct = Math.round(s.active / s.seen * 100);
-      return `  ${name}: ${foldPct}% fold, ${activePct}% bet/call (${s.seen} obs)`;
-    }).join('\n') || '  Not enough data yet';
+    .map(([name, s]) => `  ${name}: folds ${Math.round(s.folds/s.seen*100)}%, bets ${Math.round(s.active/s.seen*100)}% (${s.seen} hands)`);
+  return lines.length ? lines.join('\n') : '  Insufficient data yet';
 }
 
-// --- WebSocket Parser ---
-function parseFrame(payload) {
-  if (typeof payload !== 'string' || !payload.startsWith('42')) return null;
-  try { return JSON.parse(payload.slice(2)); } catch { return null; }
-}
+// --- Merge gC data into game state ---
+function mergeGC(data) {
+  if (data.pot !== undefined)  gs.pot = data.pot;
+  if (data.bigBlind !== undefined) gs.bigBlind = data.bigBlind;
+  if (data.seats)              gs.seats = data.seats;
+  if (data.cRPI !== undefined) gs.cRPI = data.cRPI;
+  if (data.tB)                 gs.tableBets = { ...gs.tableBets, ...data.tB };
 
-// --- DOM State Extraction ---
-async function extractFromDOM(page) {
-  const state = {};
-  try {
-    // Hero hole cards
-    const cardEls = page.locator('.table-player.you-player .table-player-cards .card-container.flipped .card');
-    const cardCount = await cardEls.count();
-    if (cardCount > 0) {
-      state.holeCards = [];
-      for (let i = 0; i < cardCount; i++) {
-        const el   = cardEls.nth(i);
-        const val  = (await el.locator('.value').textContent()).trim();
-        const suit = (await el.locator('.suit').last().textContent()).trim();
-        state.holeCards.push(val + suit);
+  // Player stacks
+  if (data.players) {
+    for (const [id, p] of Object.entries(data.players)) {
+      gs.players[id] = { ...(gs.players[id] || {}), ...p };
+    }
+  }
+
+  // Community cards — board reset means new hand
+  if (data.oTC?.['1'] !== undefined) {
+    const board = data.oTC['1'];
+    if (gs.board.length > 0 && board.length === 0) {
+      // New hand starting — archive current hand
+      closeCurrentHand();
+      if (currentDecisions.length === 0 && hands.length > 0) {
+        pastHands.unshift(hands[hands.length - 1]);
+        if (pastHands.length > 5) pastHands.pop();
+      }
+      gs.holeCards = [];
+      gs.handName  = null;
+      gs.tableBets = {};
+      gs.callAmount = 0;
+    }
+    gs.board = board;
+  }
+
+  // Hero hole cards — server sends own cards with showing:false (private), value is always set
+  if (data.pC && heroId && data.pC[heroId]) {
+    const pc = data.pC[heroId];
+    if (Array.isArray(pc.cards)) {
+      const cards = pc.cards.filter(c => c.value).map(c => c.value);
+      console.log('[pC] cards:', cards, 'name:', pc.name1 || '—');
+      if (cards.length) {
+        if (gs.holeCards.length && JSON.stringify(cards) !== JSON.stringify(gs.holeCards)) {
+          closeCurrentHand();
+        }
+        gs.holeCards     = cards;
+        gs.handName      = pc.name1 || null;
+        currentHandCards = cards;
       }
     }
-
-    // Board cards
-    const boardEls = page.locator('.table-cards .card-container.flipped.big .card');
-    const boardCount = await boardEls.count();
-    state.board = [];
-    for (let i = 0; i < boardCount; i++) {
-      const el   = boardEls.nth(i);
-      const val  = (await el.locator('.value').textContent()).trim();
-      const suit = (await el.locator('.suit').last().textContent()).trim();
-      state.board.push(val + suit);
-    }
-
-    // Pot
-    const addOnPot = page.locator('.table-pot-size .add-on .normal-value');
-    const mainPot  = page.locator('.table-pot-size .main-value .normal-value');
-    state.pot = await (await addOnPot.count() ? addOnPot : mainPot).textContent().then(t => t.trim());
-
-    // All players: name, stack, current bet, status (fold/active/away)
-    const playerEls = page.locator('.table-player');
-    const pCount    = await playerEls.count();
-    state.players   = [];
-    for (let i = 0; i < pCount; i++) {
-      const el     = playerEls.nth(i);
-      const classes = await el.getAttribute('class') || '';
-      const isHero  = classes.includes('you-player');
-      const isFold  = classes.includes('fold');
-      const isAway  = classes.includes('offline');
-
-      const nameEl  = el.locator('.table-player-name a, .table-player-name span').first();
-      const stackEl = el.locator('.table-player-stack .normal-value');
-      const betEl   = el.locator('.table-player-bet-value .normal-value');
-
-      const name  = await nameEl.count()  ? (await nameEl.textContent()).trim()  : null;
-      const stack = await stackEl.count() ? (await stackEl.textContent()).trim() : null;
-      const bet   = await betEl.count()   ? (await betEl.textContent()).trim()   : '0';
-
-      if (!name) continue;
-      const player = { name, stack, currentBet: bet, status: isFold ? 'fold' : isAway ? 'away' : 'active' };
-      if (isHero) { player.isHero = true; state.heroStack = stack; }
-      state.players.push(player);
-    }
-
-    // Current bet to call (from button label e.g. "Call 4")
-    const callBtn = page.locator('button.action-button.call');
-    if (await callBtn.count()) {
-      const label = (await callBtn.first().textContent()).trim();
-      const match = label.match(/\d+/);
-      state.callAmount = match ? parseInt(match[0]) : 0;
-    } else {
-      state.callAmount = 0;
-    }
-
-    // Raise range (min/max from input if raise panel is open)
-    const raiseInput = page.locator('input.raise-input, input[type="number"]');
-    if (await raiseInput.count()) {
-      state.raiseMin = await raiseInput.getAttribute('min');
-      state.raiseMax = await raiseInput.getAttribute('max');
-    }
-
-    // Dealer position (which seat has the D button)
-    const dealerEl = page.locator('.dealer-button-ctn');
-    if (await dealerEl.count()) {
-      const cls = await dealerEl.getAttribute('class') || '';
-      const pos = cls.match(/dealer-position-(\d+)/);
-      state.dealerPosition = pos ? pos[1] : null;
-    }
-
-  } catch (e) {
-    logRaw('dom_extract_error', { message: e.message });
   }
-  return { ...gameState, ...state };
 }
 
-// --- Read which buttons are actually enabled in DOM ---
+// --- WebSocket frame parser (direction: 'in' | 'out') ---
+function parseFrame(payload, direction) {
+  const raw = typeof payload === 'string' ? payload : Buffer.from(payload).toString('base64');
+  logRaw('ws_' + direction, { raw });   // log every frame, no exceptions
+
+  if (typeof payload !== 'string') return null;
+  const prefix = payload.slice(0, 2);
+  if (prefix === '42' || prefix === '43' || prefix === '45') {
+    try { return { type: prefix, parsed: JSON.parse(payload.slice(2)) }; } catch { return null; }
+  }
+  return null;
+}
+
+// --- Build players list from current state ---
+function playersList() {
+  return gs.seats.map(([seatNum, playerId]) => {
+    const p     = gs.players[playerId] || {};
+    const bet   = gs.tableBets[playerId];
+    const isHero = playerId === heroId;
+    return { name: p.name || playerId.slice(0, 8), stack: p.stack, currentBet: (bet === '<D>' || !bet) ? '0' : String(bet), status: p.status || 'active', isHero, seatNum };
+  });
+}
+
+// --- Available DOM actions ---
 async function getAvailableActions(page) {
   const available = [];
   for (const name of ['check', 'call', 'raise', 'fold']) {
@@ -190,91 +205,110 @@ async function getAvailableActions(page) {
   return available;
 }
 
-// --- Compute position label from seat numbers ---
-function getPositionLabel(state) {
-  const dealer   = parseInt(state.dealerPosition);
-  const heroEl   = (state.players || []).findIndex(p => p.isHero);
-  const active   = (state.players || []).filter(p => p.status !== 'away');
-  const n        = active.length;
-  if (!dealer || heroEl < 0 || n < 2) return 'unknown';
-  const dealerIdx = active.findIndex(p => p.seatNum == dealer);
-  const relPos    = ((heroEl - dealerIdx + n) % n);
-  if (relPos === 0) return 'BTN (Button)';
-  if (relPos === 1) return 'SB (Small Blind)';
-  if (relPos === 2) return 'BB (Big Blind)';
-  if (relPos === n - 1) return 'CO (Cutoff)';
-  if (relPos <= Math.floor(n / 3)) return 'EP (Early Position)';
-  return 'MP (Middle Position)';
-}
-
-// --- Compute pot odds ---
-function potOdds(pot, callAmount) {
-  if (!callAmount || callAmount === 0) return null;
-  const total  = (parseFloat(pot) || 0) + (parseFloat(callAmount) || 0);
-  const equity = Math.round((callAmount / total) * 100);
-  return `${equity}% equity needed to break even`;
+// --- Refresh gs from DOM so state is always current at decision time ---
+async function refreshStateFromDOM(page) {
+  try {
+    const potText = await page.$eval('.table-pot-size', el => el.textContent).catch(() => null);
+    if (potText) {
+      const potNum = parseInt(potText.replace(/[^0-9]/g, ''));
+      if (!isNaN(potNum)) gs.pot = potNum;
+    }
+    // Refresh call amount from the call button label
+    const callEl = await page.$('button.action-button.call:not([disabled])');
+    if (callEl) {
+      const callText = await callEl.textContent();
+      const callNum = parseInt(callText.replace(/[^0-9]/g, ''));
+      if (!isNaN(callNum)) gs.callAmount = callNum;
+    }
+  } catch { /* DOM may be mid-update — use existing WS state */ }
 }
 
 // --- Gemini ---
-const SYS_PROMPT = `You are a seasoned No Limit Texas Hold'em poker player with 15+ years of experience at mid-to-high stakes cash games. You play a balanced, exploitative style — primarily GTO but willing to deviate when opponent tendencies justify it.
+const SYS_PROMPT = `You are a seasoned No Limit Texas Hold'em player with 15+ years of mid-to-high stakes experience. You play exploitative GTO — balanced by default, deviating when opponent tendencies justify it.
 
-Your playing style:
-- Aggressive in position: bet and raise to take control, don't let opponents see free cards
-- Exploit weak players: bluff more against tight folders, value-bet thinner against calling stations
-- Protect your stack: fold speculative hands when pot odds don't justify the risk
-- Mix your play: don't be predictable — sometimes slow-play, sometimes bet big
-- Think in ranges: consider what hands opponents likely have given their actions
-- Never results-oriented: make the decision with the highest expected value, not the "safe" one
+How you think at every decision:
+1. Assess your raw hand strength AND your equity given the board texture
+2. Identify your position and use it — be aggressive in position, cautious out of position
+3. Read the table: who has been aggressive, who folds too much, who calls too wide
+4. Calculate pot odds — only call if your equity exceeds the price
+5. Think about your range and opponents' ranges, not just your specific hand
+6. Use SPR: below 3 = pot committed (simplify to stack-off or fold), 3–13 = standard play, above 13 = implied odds matter
+7. Use stack depth in BBs: under 20BB = push/fold game, 20–40BB = shove-heavy, 40BB+ = full poker
+8. Count active players: multiway pots require stronger hands; heads-up allows wider bluffs
+9. Factor in bet sizing: read opponent bets as % of pot shown — small = weak/probing, large = polarised
 
-Rules you never break:
-1. NEVER fold to a free check — if check is available, always at least check
-2. NEVER call off your stack with a weak hand just to stay in the game
-3. ALWAYS consider pot odds before calling
-4. ONLY choose from the available actions listed
+Your rules:
+- NEVER fold to a free check. Check is free money.
+- NEVER call off your stack drawing thin. Know your outs.
+- Raise for value AND as a bluff — mix your frequencies
+- Bet sizing: value bets 60–80% pot, bluffs can be smaller (40–60%)
+- Only choose from the AVAILABLE ACTIONS listed. Nothing else.
 
 Respond ONLY with valid JSON: {"decision":"FOLD|CHECK|CALL|RAISE","amount":number,"reasoning":"string"}
-The reasoning must be a concise 1–2 sentence poker thought process, not a generic statement.`;
+reasoning: 1–2 sentences of actual poker thinking. No generic statements.`;
 
 const gemini = USE_AI
   ? new GoogleGenerativeAI(process.env.GOOGLE_API_KEY).getGenerativeModel({ model: MODEL })
   : null;
 
-async function askGemini(state, availableActions) {
-  const position = getPositionLabel(state);
-  const odds          = potOdds(state.pot, state.callAmount);
+async function askGemini(available) {
+  const players  = playersList();
+  const hero     = players.find(p => p.isHero);
+  const street   = !gs.board.length ? 'Pre-flop' : gs.board.length === 3 ? 'Flop' : gs.board.length === 4 ? 'Turn' : 'River';
+  const callAmt  = gs.callAmount || 0;
+  const potOdds  = callAmt ? `${Math.round(callAmt / (Number(gs.pot) + callAmt) * 100)}% equity needed` : null;
+  const heroStack = Number(hero?.stack ?? 0);
+  const bb        = Number(gs.bigBlind) || 2;
+  const pot       = Number(gs.pot) || 1;
+  const stackBB   = Math.round(heroStack / bb);
+  const spr       = (heroStack / pot).toFixed(1);
+  const activeCnt = players.filter(p => p.status !== 'fold').length;
 
-  const handCtx = currentHand.length
-    ? `This hand so far:\n${currentHand.map((d, i) => `  ${i + 1}. ${d.street} — Hero: ${d.heroAction}, Pot: ${d.pot}`).join('\n')}`
-    : 'First decision this hand (pre-flop open).';
+  const handCtx = currentDecisions.length
+    ? currentDecisions.map((d, i) => {
+        const who = Object.entries(d.game_state?.tableBets || {})
+          .map(([id, v]) => `${gs.players[id]?.name||id.slice(0,8)}:${v}`).join(' ');
+        return `  ${i+1}. [${d.street}] ${d.actual_action || d.ai_metadata?.decision}  pot=${d.game_state?.pot}  bets={${who}}`;
+      }).join('\n')
+    : '  First decision this hand';
 
   const pastCtx = pastHands.length
-    ? `Recent hands (hero actions):\n${pastHands.map((h, i) => `  Hand -${i + 1}: ${h.decisions.map(d => d.heroAction).join(' → ')}`).join('\n')}`
-    : '';
+    ? pastHands.map((h, i) => `  Hand -${i+1} [${h.holeCards?.join(' ')}]: ${h.decisions.map(d => d.actual_action || d.ai_metadata?.decision).join('→')}`).join('\n')
+    : '  No prior hands this session';
 
-  const prompt = `=== CURRENT SITUATION ===
-Hero hole cards : ${JSON.stringify(state.holeCards)}
-Board           : ${state.board?.length ? JSON.stringify(state.board) : 'none — PRE-FLOP'}
-Street          : ${!state.board?.length ? 'Pre-flop' : state.board.length === 3 ? 'Flop' : state.board.length === 4 ? 'Turn' : 'River'}
-Hero position   : ${position}
-Hero stack      : ${state.heroStack}
-Pot             : ${state.pot}
-To call         : ${state.callAmount ?? 0}${odds ? `  (${odds})` : ''}
-${state.raiseMin ? `Raise range     : ${state.raiseMin} – ${state.raiseMax}` : ''}
+  const prompt = `=== SITUATION ===
+Street         : ${street}
+Hole cards     : ${gs.holeCards.join(' ')}${gs.handName ? `  (${gs.handName})` : ''}
+Board          : ${gs.board.length ? gs.board.join(' ') : '(none — pre-flop)'}
+Pot            : ${gs.pot}${potOdds ? `   To call: ${callAmt}  [${potOdds}]` : ''}
+Hero stack     : ${heroStack}  (${stackBB} BBs)
+SPR            : ${spr}  (stack-to-pot ratio)
+Active players : ${activeCnt} of ${players.length} still in
+Big blind      : ${bb}
+Position       : seat ${hero?.seatNum ?? '?'} of ${players.length} (button not tracked — use seat order as proxy)
 
-=== PLAYERS ===
-${(state.players || []).map(p =>
-  `  ${p.isHero ? '★ YOU' : '      '} ${p.name.padEnd(15)} stack=${String(p.stack).padStart(4)}  bet=${String(p.currentBet).padStart(4)}  [${p.status}]`
+=== ALL PLAYERS (seat order) ===
+${players.map(p =>
+  `${p.isHero ? '★' : ' '} [seat ${p.seatNum}] ${(p.name).padEnd(14)} stack=${String(p.stack??'?').padStart(5)} (${Math.round(Number(p.stack||0)/bb)}BB)  bet=${String(p.currentBet).padStart(5)}  ${p.status}`
 ).join('\n')}
 
-=== HAND HISTORY ===
+=== BETTING THIS STREET ===
+${Object.entries(gs.tableBets).map(([id, v]) => {
+  const pct = gs.pot ? Math.round(Number(v) / pot * 100) : 0;
+  return `  ${(gs.players[id]?.name||id.slice(0,8)).padEnd(16)}: ${v}  (${pct}% of pot)`;
+}).join('\n') || '  none yet'}
+
+=== THIS HAND HISTORY ===
 ${handCtx}
+
+=== RECENT HANDS ===
 ${pastCtx}
 
-=== OPPONENT TENDENCIES (session) ===
-${tendencySummary()}
+=== OPPONENT TENDENCIES ===
+${tendencies()}
 
 === AVAILABLE ACTIONS ===
-${availableActions.map(a => a.label).join('  |  ')}`;
+${available.map(a => a.label).join('  |  ')}`;
 
   const res    = await gemini.generateContent(`${SYS_PROMPT}\n\n${prompt}`);
   const raw    = res.response.text();
@@ -282,88 +316,98 @@ ${availableActions.map(a => a.label).join('  |  ')}`;
   return { prompt, raw, ...parsed };
 }
 
-// --- Validate Gemini decision against available actions, fallback if needed ---
-function resolveDecision(decision, availableActions) {
-  const names = availableActions.map(a => a.action);
+function resolveDecision(decision, available) {
+  const names = available.map(a => a.action);
   if (names.includes(decision)) return decision;
-  // Fallback order: CHECK → CALL → FOLD (never default to FOLD first)
-  for (const fallback of ['CHECK', 'CALL', 'FOLD']) {
-    if (names.includes(fallback)) {
-      console.log(`[Warning] ${decision} not available, falling back to ${fallback}`);
-      return fallback;
-    }
+  for (const f of ['CHECK', 'CALL', 'FOLD']) {
+    if (names.includes(f)) { console.log(`[Resolve] ${decision} → ${f}`); return f; }
   }
   return decision;
 }
 
-// --- DOM Actions ---
+// --- DOM click (auto mode) ---
 async function executeAction(page, decision, amount) {
-  await page.waitForTimeout(2000 + Math.random() * 3000);
-  const btn = (sel) => page.locator(`button.action-button.${sel}:not([disabled])`).first();
-
-  if      (decision === 'FOLD')  await btn('fold').click();
-  else if (decision === 'CHECK') await btn('check').click();
-  else if (decision === 'CALL')  await btn('call').click();
-  else if (decision === 'RAISE') {
+  await page.waitForTimeout(300 + Math.random() * 500);
+  // Dismiss any overlay (TOS agreement, notifications) blocking clicks
+  const overlay = page.locator('#accept-tos-button, button.decision-button.green');
+  if (await overlay.count()) await overlay.first().click().catch(() => {});
+  await page.waitForTimeout(200);
+  // Re-check available buttons — state may have changed while Gemini was thinking
+  const fresh = await getAvailableActions(page);
+  if (!fresh.length) { console.log('[Action] Buttons gone before click — hand moved on'); return; }
+  const resolved = resolveDecision(decision, fresh);
+  const btn = s => page.locator(`button.action-button.${s}:not([disabled])`).first();
+  if      (resolved === 'FOLD')  await btn('fold').click();
+  else if (resolved === 'CHECK') await btn('check').click();
+  else if (resolved === 'CALL')  await btn('call').click();
+  else if (resolved === 'RAISE') {
     await btn('raise').click();
-    const input = page.locator('input.raise-input, input[type="number"]').first();
-    await input.fill(String(amount));
-    await input.press('Enter');
+    await page.waitForTimeout(400);
+    // Try to find and fill the raise amount input (short timeout — if gone, raise already committed)
+    try {
+      const input = page.locator('input.raise-input, input[type="number"]').first();
+      await input.waitFor({ timeout: 2000 });
+      await input.fill(String(amount));
+      await input.press('Enter');
+    } catch {
+      // No input appeared — raise button may have directly committed (e.g. all-in)
+      console.log('[Action] No raise input found — raise committed directly');
+    }
   }
 }
 
-// --- Safe fallback when no card data ---
-async function safeDefault(page, available) {
-  const names = available.map(a => a.action);
-  const pick  = ['CHECK', 'CALL'].find(a => names.includes(a));
-  if (pick) {
-    console.log(`[Advisory] Suggest: ${pick} (no card data)`);
-    if (MODE === 'auto') { await page.waitForTimeout(1500); await executeAction(page, pick, 0); }
-  } else {
-    console.log('[Advisory] No safe fallback — please act manually');
-  }
-}
-
-// --- AI Turn Handler ---
+// --- Turn handler ---
 async function handleTurn(page) {
   if (turnLock) return;
   turnLock = true;
-
   try {
-    const [state, available] = await Promise.all([extractFromDOM(page), getAvailableActions(page)]);
-    console.log('[Turn] Available actions:', available.map(a => a.label).join(', '));
-
-    // Track new hand and update player tendency stats
-    if (state.holeCards?.length) detectNewHand(state.holeCards);
-    updatePlayerStats(state.players);
-
-    if (!state.holeCards?.length) {
-      console.log('[Turn] No hole cards in DOM');
-      await safeDefault(page, available);
-      return;
+    // If marked away, click "I'M BACK" first so action buttons appear
+    const backBtn = page.locator('button.back-to-game-btn, button:has-text("I\'M BACK")');
+    if (await backBtn.count()) {
+      console.log('[Bot] Clicking I\'M BACK');
+      await backBtn.first().click();
+      await page.waitForTimeout(800);
     }
 
-    const street = !state.board?.length ? 'pre-flop' : state.board.length === 3 ? 'flop' : state.board.length === 4 ? 'turn' : 'river';
-    console.log('[Turn] Cards:', state.holeCards, '| Street:', street, '| Board:', state.board, '| Pot:', state.pot);
+    let available = await getAvailableActions(page);
+    if (!available.length) {
+      // Buttons briefly absent — wait one tick and retry once
+      await page.waitForTimeout(500);
+      available = await getAvailableActions(page);
+    }
+    if (!available.length) { console.log('[Turn] No action buttons after retry — skipping'); return; }
+
+    // Extract call amount from button label
+    const callBtn = available.find(a => a.action === 'CALL');
+    gs.callAmount = callBtn ? parseInt(callBtn.label.match(/\d+/)?.[0] || '0') : 0;
+
+    const street = !gs.board.length ? 'pre-flop' : gs.board.length === 3 ? 'flop' : gs.board.length === 4 ? 'turn' : 'river';
+    console.log(`[Turn] ${street} | ${gs.holeCards.join(' ')} ${gs.handName||''} | board: ${gs.board.join(' ')||'—'} | pot: ${gs.pot}`);
+    console.log(`[Turn] Actions: ${available.map(a=>a.label).join(', ')}`);
+
+    if (!gs.holeCards.length) {
+      console.log('[Turn] No hole cards yet — waiting up to 3s');
+      for (let i = 0; i < 6 && !gs.holeCards.length; i++) await page.waitForTimeout(500);
+      if (!gs.holeCards.length) { console.log('[Turn] Gave up waiting for hole cards'); return; }
+    }
+
+    await refreshStateFromDOM(page);
+    updateStats(playersList());
 
     if (!USE_AI) {
-      entries.push({ timestamp: new Date().toISOString(), game_state: state });
-      save();
+      save({ timestamp: new Date().toISOString(), street, game_state: structuredClone(gs) });
       return;
     }
 
-    const ai      = await askGemini(state, available);
+    console.log(`[Gemini] Calling... ${gs.holeCards.join(' ')} | ${street} | pot=${gs.pot}`);
+    const ai       = await askGemini(available);
     const decision = resolveDecision(ai.decision, available);
-    console.log(`[Gemini] ${ai.decision} ${ai.amount || ''} | ${ai.reasoning}`);
-    if (decision !== ai.decision) console.log(`[Resolved] Using ${decision} instead`);
-
-    // Record this decision into current hand history
-    currentHand.push({ street, heroAction: `${decision}${ai.amount ? ' ' + ai.amount : ''}`, pot: state.pot });
+    console.log(`[Gemini] ${ai.decision}${ai.amount?' '+ai.amount:''} | ${ai.reasoning}`);
 
     const entry = {
-      timestamp:     new Date().toISOString(),
-      game_state:    state,
-      ai_metadata:   { prompt: ai.prompt, raw: ai.raw, decision: ai.decision, amount: ai.amount, reasoning: ai.reasoning },
+      timestamp: new Date().toISOString(), street,
+      game_state:  structuredClone(gs),
+      ai_metadata: { prompt: ai.prompt, raw: ai.raw, decision: ai.decision, amount: ai.amount, reasoning: ai.reasoning },
       actual_action: MODE === 'auto' ? decision : 'PENDING',
       mode: MODE,
     };
@@ -371,13 +415,12 @@ async function handleTurn(page) {
     if (MODE === 'auto') {
       await executeAction(page, decision, ai.amount);
       entry.actual_action = decision;
-      console.log(`[Action] Executed: ${decision}`);
+      console.log(`[Action] ${decision}`);
     } else {
-      console.log(`[Advisory] Suggested: ${decision} ${ai.amount || ''}`);
+      console.log(`[Advisory] ${decision}${ai.amount?' '+ai.amount:''}`);
     }
 
-    entries.push(entry);
-    save();
+    save(entry);
   } catch (e) {
     console.error('[Error]', e.message);
     logRaw('error', { message: e.message, stack: e.stack });
@@ -386,56 +429,70 @@ async function handleTurn(page) {
   }
 }
 
-// --- WebSocket Listener ---
+// --- HTTP response interception (catch any non-WS card delivery) ---
+function attachHTTP(page) {
+  page.on('response', async res => {
+    try {
+      const url = res.url();
+      const ct  = res.headers()['content-type'] || '';
+      if (!ct.includes('json') && !ct.includes('text')) return;
+      const body = await res.text().catch(() => '');
+      if (!body) return;
+      logRaw('http_response', { url, status: res.status(), body: body.slice(0, 2000) });
+    } catch { /* ignore */ }
+  });
+}
+
+// --- DOM turn watcher — polls decision-current class every 500ms (original approach) ---
+let turnWatcherStarted = false;
+
+async function startTurnWatcher(page) {
+  if (turnWatcherStarted) return;  // only one watcher per session
+  turnWatcherStarted = true;
+  console.log('[Bot] Turn watcher started');
+  let lastSeen = false;
+  while (true) {
+    try {
+      await page.waitForTimeout(500);
+      const myTurn = await page.$('div.table-player.you-player.decision-current');
+      if (myTurn && !lastSeen) {
+        lastSeen = true;
+        handleTurn(page);  // fire-and-forget, turnLock prevents overlap
+      } else if (!myTurn) {
+        lastSeen = false;
+      }
+    } catch { /* page navigating — keep looping */ }
+  }
+}
+
+// --- WebSocket attachment ---
 function attachWS(page) {
+  attachHTTP(page);
   page.on('websocket', ws => {
     if (!ws.url().includes('pokernow')) return;
     console.log('[WS] Connected:', ws.url());
-    gamePage = page;
+    startTurnWatcher(page);  // no-op if already running
 
-    // Log outgoing frames — needed to learn action format for future WS-based actions
     ws.on('framesent', ({ payload }) => {
-      if (typeof payload === 'string' && payload.startsWith('42')) {
-        const frame = parseFrame(payload);
-        if (frame) logRaw('sent', frame);
-      }
+      parseFrame(payload, 'out');
     });
 
     ws.on('framereceived', ({ payload }) => {
-      const frame = parseFrame(payload);
+      const frame = parseFrame(payload, 'in');
       if (!frame) return;
-      const [event, data] = frame;
-      logRaw(event, data);
+      const [event, data] = frame.parsed || [];
+      if (!event) return;
 
       if (event === 'registered') {
         heroId = data?.currentPlayer?.id;
+        mergeGC(data?.gameState || {});
         console.log('[Hero] ID:', heroId);
-        const gs = data?.gameState || {};
-        if (gs.players) gameState.players = gs.players;
-        if (gs.seats)   gameState.seats   = gs.seats;
-        if (gs.pot != null) gameState.pot = gs.pot;
-        gameState.heroId = heroId;
 
       } else if (event === 'gC') {
-        // Heartbeat — eventsData carries incremental updates when non-empty
-        const events = data?.eventsData;
-        if (Array.isArray(events) && events.length) {
-          events.forEach(e => gameState.recentActions.push(e));
-          if (gameState.recentActions.length > 20) gameState.recentActions = gameState.recentActions.slice(-20);
-          logRaw('gC_events', events);
-        }
-
-      } else if (event === 'action') {
-        gameState.recentActions.push(data);
-        if (gameState.recentActions.length > 20) gameState.recentActions.shift();
-        if (!USE_AI) {
-          entries.push({ timestamp: new Date().toISOString(), event: 'action', action_data: data, game_state: structuredClone(gameState) });
-          save();
-          console.log(`[Action] ${data?.type || JSON.stringify(data).slice(0, 80)}`);
-        }
+        mergeGC(data);
 
       } else {
-        console.log(`[WS event] ${event}`);
+        console.log(`[WS] ${event}`);
       }
     });
   });
@@ -444,34 +501,16 @@ function attachWS(page) {
 // --- Main ---
 async function main() {
   const browser = await chromium.launch({ headless: false });
-
   browser.on('page', page => { console.log('[Page] New tab'); attachWS(page); });
 
   const page = await browser.newPage();
   attachWS(page);
   await page.goto(URL);
 
-  console.log(`[Bot] Mode: ${USE_AI ? `AI (${MODEL}, ${MODE})` : 'Capture only'} | ${runFile}`);
+  console.log(`[Bot] ${USE_AI ? `AI (${MODEL}, ${MODE})` : 'Capture only'} | ${runFile}`);
   console.log('[Bot] Login and join your PokerNow game...');
 
-  if (USE_AI) {
-    let lastSeen = false;
-    while (true) {
-      await new Promise(r => setTimeout(r, 500));
-      const active = gamePage || page;
-      try {
-        const myTurn = await active.$('div.table-player.you-player.decision-current');
-        if (myTurn && !lastSeen) {
-          lastSeen = true;
-          await handleTurn(active);
-        } else if (!myTurn) {
-          lastSeen = false;
-        }
-      } catch (e) {
-        logRaw('dom_error', { message: e.message });
-      }
-    }
-  }
+  await new Promise(() => {}); // stay alive — WS events drive everything
 }
 
 main().catch(console.error);

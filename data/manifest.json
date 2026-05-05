@@ -1,5 +1,59 @@
 [
   {
+    "file": "run_2026-05-05T05-47-05-573Z.json",
+    "timestamp": "2026-05-05T05:47:05.573Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 2,
+    "decisions": 2
+  },
+  {
+    "file": "run_2026-05-05T04-47-22-110Z.json",
+    "timestamp": "2026-05-05T04:47:22.111Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 10,
+    "decisions": 13
+  },
+  {
+    "file": "run_2026-05-05T05-18-16-908Z.json",
+    "timestamp": "2026-05-05T05:18:16.908Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 4,
+    "decisions": 4
+  },
+  {
+    "file": "run_2026-05-05T04-40-20-589Z.json",
+    "timestamp": "2026-05-05T04:40:20.589Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 1,
+    "decisions": 1
+  },
+  {
+    "file": "run_2026-05-05T04-28-51-111Z.json",
+    "timestamp": "2026-05-05T04:28:51.111Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 1,
+    "decisions": 2
+  },
+  {
+    "file": "run_2026-05-04T06-04-50-991Z.json",
+    "timestamp": "2026-05-04T06:04:50.991Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 2,
+    "decisions": 5
+  },
+  {
     "file": "run_2026-04-30T09-34-51-960Z.json",
     "timestamp": "2026-04-30T09:34:51.960Z",
     "ai": true,
