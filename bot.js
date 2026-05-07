@@ -9,11 +9,13 @@ const argv = process.argv.slice(2).reduce((acc, a) => {
   return { ...acc, [k]: v ?? true };
 }, {});
 
-const USE_AI    = 'ai' in argv;
-const MODEL     = argv.model || 'gemini-3.1-pro-preview';
-const MODE      = argv.mode  || 'advisory';
-const URL       = argv.url   || 'https://www.pokernow.club';
-const MAX_HANDS = argv.hands ? parseInt(argv.hands) : 20;
+const USE_AI         = 'ai' in argv;
+const MODEL          = argv.model || 'gemini-3.1-pro-preview';
+const MODE           = argv.mode  || 'advisory';
+const MAX_HANDS      = argv.hands ? parseInt(argv.hands) : 20;
+const HANDS_PER_GAME = argv['hands-per-game'] ? parseInt(argv['hands-per-game']) : 5;
+const COMMUNITY_URL  = 'https://www.pokernow.com/play-with-poker-now-community';
+const BUY_IN_AMOUNT  = 25;
 
 // --- Setup ---
 mkdirSync('data', { recursive: true });
@@ -29,23 +31,47 @@ function logRaw(event, data) {
 }
 
 // --- Run Data (grouped by hand) ---
-const runMeta = { file: `run_${runId}.json`, timestamp: new Date().toISOString(), ai: USE_AI, mode: USE_AI ? MODE : null, model: USE_AI ? MODEL : null, hands: 0, decisions: 0 };
-let hands            = [];
-let currentHandId    = 1;
-let currentDecisions = [];
-let currentHandCards = null;
+const runMeta = { file: `run_${runId}.json`, timestamp: new Date().toISOString(), ai: USE_AI, mode: USE_AI ? MODE : null, model: USE_AI ? MODEL : null, hands: 0, decisions: 0, wins: 0, losses: 0 };
+let hands              = [];
+let currentHandId      = 1;
+let currentDecisions   = [];
+let currentHandCards   = null;
+let heroStackBefore    = 0;  // track stack at hand start
 
 function closeCurrentHand() {
   if (!currentDecisions.length) return;
-  const hand = { handId: currentHandId++, holeCards: currentHandCards, startedAt: currentDecisions[0].timestamp, decisions: currentDecisions };
+  const hero = playersList().find(p => p.isHero);
+  const heroStackAfter = Number(hero?.stack ?? 0);
+  const stackChange = heroStackAfter - heroStackBefore;
+  const outcome = stackChange > 0 ? 'WIN' : stackChange < 0 ? 'LOSS' : 'BREAK_EVEN';
+  if (outcome === 'WIN') runMeta.wins++;
+  if (outcome === 'LOSS') runMeta.losses++;
+
+  const hand = {
+    handId: currentHandId++,
+    holeCards: currentHandCards,
+    finalBoard: [...gs.board],
+    showdownCards: { ...gs.showdownCards },
+    startedAt: currentDecisions[0].timestamp,
+    decisions: currentDecisions,
+    outcome,
+    stackChange,
+  };
   hands.push(hand);
   currentDecisions = [];
   currentHandCards = null;
+  gs.showdownCards = {};
+  handsInCurrentGame++;
+  console.log(`[Hand ${hand.handId}] ${outcome} (${stackChange > 0 ? '+' : ''}${stackChange})`);
   if (gemini) analyzeHand(hand).catch(e => console.error('[Analysis]', e.message));
   if (hands.length >= MAX_HANDS) {
     console.log(`[Bot] Reached ${MAX_HANDS} hands — stopping.`);
     save();
     process.exit(0);
+  }
+  if (handsInCurrentGame >= HANDS_PER_GAME && gameBuffer.length > 0) {
+    console.log(`[Bot] Played ${HANDS_PER_GAME} hands in this game — moving to next.`);
+    moveToNextGame().catch(e => console.error('[Game]', e.message));
   }
 }
 
@@ -57,11 +83,20 @@ async function analyzeHand(hand) {
     return `  ${i+1}. [${d.street}] ${ai.decision || d.actual_action || '?'} | pot=${gs.pot} board=${gs.board?.join(' ')||'none'} | ${ai.reasoning || '—'}`;
   }).join('\n');
 
+  const runout = hand.finalBoard?.length ? `Final board: ${hand.finalBoard.join(' ')}` : 'Folded pre-flop (no board)';
+  const showdown = Object.keys(hand.showdownCards || {}).length
+    ? `Showdown hands: ${Object.entries(hand.showdownCards).map(([n, c]) => `${n}: ${c.join(' ')}`).join(', ')}`
+    : 'No showdown (opponents folded or hero folded pre-showdown)';
+
   const prompt = `Post-hand analysis. Hero held ${hand.holeCards?.join(' ')}.
+${runout}
+${showdown}
+
 Decisions:
 ${lines}
 
-For each decision: was it correct, or was there a better play?
+For each decision: was it correct given what we now know ran out, or was there a better play?
+If hero folded: explain what would have happened if hero called/raised instead.
 Respond JSON only: {"steps":[{"verdict":"correct|questionable|mistake","note":"1 sentence"}],"overall":"Well played|Acceptable|Missed opportunity","summary":"2 sentences max"}`;
 
   const res  = await gemini.generateContent(prompt);
@@ -92,9 +127,14 @@ function save(entry) {
   writeFileSync(manifestFile, JSON.stringify(manifest, null, 2));
 }
 
+// --- Multi-game buffer ---
+let gameBuffer        = [];   // eligible game URLs scraped from community page
+let activePage        = null; // current Playwright page (set in main)
+let handsInCurrentGame = 0;   // resets each time we move to a new game
+
 // --- Game State (driven entirely by WebSocket) ---
-let gs = { board: [], pot: 0, holeCards: [], handName: null, players: {}, seats: [], tableBets: {}, cRPI: [], callAmount: 0, bigBlind: 2 };
-let heroId      = null;  // account ID — used for private pC card lookups
+let gs = { board: [], pot: 0, holeCards: [], handName: null, players: {}, seats: [], tableBets: {}, cRPI: [], callAmount: 0, bigBlind: 2, showdownCards: {} };
+let heroId   = null;  // account ID — used for private pC card lookups
 let turnLock = false;
 
 // --- Session stats for Gemini context ---
@@ -167,6 +207,20 @@ function mergeGC(data) {
       }
     }
   }
+
+  // Capture other players' hole cards at showdown (showing:true)
+  if (data.pC) {
+    for (const [playerId, pc] of Object.entries(data.pC)) {
+      if (playerId === heroId) continue;
+      if (!Array.isArray(pc.cards)) continue;
+      const shown = pc.cards.filter(c => c.value && c.showing).map(c => c.value);
+      if (shown.length >= 2) {
+        const name = gs.players[playerId]?.name || playerId.slice(0, 8);
+        gs.showdownCards[name] = shown;
+        console.log(`[Showdown] ${name}: ${shown.join(' ')}`);
+      }
+    }
+  }
 }
 
 // --- WebSocket frame parser (direction: 'in' | 'out') ---
@@ -210,14 +264,14 @@ async function refreshStateFromDOM(page) {
   try {
     const potText = await page.$eval('.table-pot-size', el => el.textContent).catch(() => null);
     if (potText) {
-      const potNum = parseInt(potText.replace(/[^0-9]/g, ''));
-      if (!isNaN(potNum)) gs.pot = potNum;
+      const potNum = parseInt(potText.match(/\d+/)?.[0] || '');  // first number only, avoids concatenation
+      if (!isNaN(potNum) && potNum > 0) gs.pot = potNum;
     }
     // Refresh call amount from the call button label
     const callEl = await page.$('button.action-button.call:not([disabled])');
     if (callEl) {
       const callText = await callEl.textContent();
-      const callNum = parseInt(callText.replace(/[^0-9]/g, ''));
+      const callNum = parseInt(callText.match(/\d+/)?.[0] || '');
       if (!isNaN(callNum)) gs.callAmount = callNum;
     }
   } catch { /* DOM may be mid-update — use existing WS state */ }
@@ -234,6 +288,9 @@ How you think at every decision:
 5. Think about your range and opponents' ranges, not just your specific hand
 6. Use SPR: below 3 = pot committed (simplify to stack-off or fold), 3–13 = standard play, above 13 = implied odds matter
 7. Use stack depth in BBs: under 20BB = push/fold game, 20–40BB = shove-heavy, 40BB+ = full poker
+   Under 20BB: no open-limping, no calling a raise without committing your stack. Either shove or fold.
+   Short-stack shove threshold rises with stack: under 10BB shove wide (any Ax, any pair, broadways, suited connectors); 10–15BB shove top 40% of hands; 15–20BB shove top 30%.
+   Pot odds always override stack rules: if calling costs ≤2BB into a pot already 5× or more that size, the price alone justifies the call — never fold for free.
 8. Count active players: multiway pots require stronger hands; heads-up allows wider bluffs
 9. Factor in bet sizing: read opponent bets as % of pot shown — small = weak/probing, large = polarised
 
@@ -276,6 +333,11 @@ async function askGemini(available) {
     ? pastHands.map((h, i) => `  Hand -${i+1} [${h.holeCards?.join(' ')}]: ${h.decisions.map(d => d.actual_action || d.ai_metadata?.decision).join('→')}`).join('\n')
     : '  No prior hands this session';
 
+  const tableType = players.length <= 2 ? 'Heads-up (widen ranges drastically, aggression is key)'
+    : players.length <= 4 ? 'Short-handed 3-4 (play wide and aggressive)'
+    : players.length <= 6 ? '6-max (moderately wide, position matters most)'
+    : '9-handed full ring (tighten starting hands, respect early-position raises)';
+
   const prompt = `=== SITUATION ===
 Street         : ${street}
 Hole cards     : ${gs.holeCards.join(' ')}${gs.handName ? `  (${gs.handName})` : ''}
@@ -284,6 +346,7 @@ Pot            : ${gs.pot}${potOdds ? `   To call: ${callAmt}  [${potOdds}]` : '
 Hero stack     : ${heroStack}  (${stackBB} BBs)
 SPR            : ${spr}  (stack-to-pot ratio)
 Active players : ${activeCnt} of ${players.length} still in
+Table type     : ${tableType}
 Big blind      : ${bb}
 Position       : seat ${hero?.seatNum ?? '?'} of ${players.length} (button not tracked — use seat order as proxy)
 
@@ -337,22 +400,24 @@ async function executeAction(page, decision, amount) {
   if (!fresh.length) { console.log('[Action] Buttons gone before click — hand moved on'); return; }
   const resolved = resolveDecision(decision, fresh);
   const btn = s => page.locator(`button.action-button.${s}:not([disabled])`).first();
-  if      (resolved === 'FOLD')  await btn('fold').click();
-  else if (resolved === 'CHECK') await btn('check').click();
-  else if (resolved === 'CALL')  await btn('call').click();
-  else if (resolved === 'RAISE') {
-    await btn('raise').click();
-    await page.waitForTimeout(400);
-    // Try to find and fill the raise amount input (short timeout — if gone, raise already committed)
-    try {
-      const input = page.locator('input.raise-input, input[type="number"]').first();
-      await input.waitFor({ timeout: 2000 });
-      await input.fill(String(amount));
-      await input.press('Enter');
-    } catch {
-      // No input appeared — raise button may have directly committed (e.g. all-in)
-      console.log('[Action] No raise input found — raise committed directly');
+  try {
+    if      (resolved === 'FOLD')  await btn('fold').click({ timeout: 3000 });
+    else if (resolved === 'CHECK') await btn('check').click({ timeout: 3000 });
+    else if (resolved === 'CALL')  await btn('call').click({ timeout: 3000 });
+    else if (resolved === 'RAISE') {
+      await btn('raise').click({ timeout: 3000 });
+      await page.waitForTimeout(400);
+      try {
+        const input = page.locator('input.raise-input, input[type="number"]').first();
+        await input.waitFor({ timeout: 2000 });
+        await input.fill(String(amount));
+        await input.press('Enter');
+      } catch {
+        console.log('[Action] No raise input found — raise committed directly');
+      }
     }
+  } catch (e) {
+    console.log(`[Action] Click failed (${resolved}):`, e.message.slice(0, 80));
   }
 }
 
@@ -393,6 +458,12 @@ async function handleTurn(page) {
 
     await refreshStateFromDOM(page);
     updateStats(playersList());
+
+    // Capture hero stack at first decision of hand (for win/loss tracking)
+    if (currentDecisions.length === 0) {
+      const hero = playersList().find(p => p.isHero);
+      heroStackBefore = Number(hero?.stack ?? 0);
+    }
 
     if (!USE_AI) {
       save({ timestamp: new Date().toISOString(), street, game_state: structuredClone(gs) });
@@ -498,19 +569,99 @@ function attachWS(page) {
   });
 }
 
+// --- Scrape community page and buffer eligible NLH games ---
+async function scrapeAndBufferGames(page) {
+  console.log('[Bot] Scraping community games...');
+  await page.goto(COMMUNITY_URL);
+  console.log('[Bot] Waiting for login (log in if prompted)...');
+  try {
+    await page.waitForSelector('div.items div.item', { timeout: 180000 });
+  } catch {
+    console.log('[Bot] Timed out — no games buffered');
+    return;
+  }
+  await page.waitForTimeout(1000);
+
+  const games = await page.$$eval('div.items div.item', items => items.map(item => {
+    const ps   = [...item.querySelectorAll(':scope > p')].map(p => p.textContent.trim());
+    const link = item.querySelector('div.actions a');
+    const m    = (ps[2] || '').match(/(\d+)\/(\d+)/);
+    return {
+      type:     ps[0] || '',
+      blinds:   ps[1] || '',
+      buyIn:    ps[2] || '',
+      players:  parseInt(ps[3]) || 0,
+      minBuyIn: m ? parseInt(m[1]) : 0,
+      maxBuyIn: m ? parseInt(m[2]) : 0,
+      url: link ? 'https://www.pokernow.com' + link.getAttribute('href') : null,
+    };
+  }));
+
+  const eligible = games.filter(g =>
+    g.type === 'NLH' && g.minBuyIn >= 25 && g.maxBuyIn <= 100 && g.players >= 2 && g.url
+  );
+  eligible.sort(() => Math.random() - 0.5);  // shuffle for player-count variety
+  gameBuffer = eligible.map(({ url, players, blinds, buyIn }) => ({ url, players, blinds, buyIn }));
+
+  console.log(`[Bot] Buffered ${gameBuffer.length} eligible NLH games:`);
+  gameBuffer.forEach(g => console.log(`  ${g.blinds} | buy-in ${g.buyIn} | ${g.players}p → ${g.url}`));
+}
+
+// --- Navigate to a game and try to auto sit-down with BUY_IN_AMOUNT ---
+async function joinGame(page, game) {
+  console.log(`[Bot] Joining: ${game.blinds} | ${game.players} players | ${game.url}`);
+  gs                 = { board: [], pot: 0, holeCards: [], handName: null, players: {}, seats: [], tableBets: {}, cRPI: [], callAmount: 0, bigBlind: 2, showdownCards: {} };
+  heroId             = null;
+  turnLock           = false;
+  handsInCurrentGame = 0;
+  turnWatcherStarted = false;
+  await page.goto(game.url);
+
+  try {
+    const sitBtn = page.locator('.table-player.open-seat button, button:has-text("Sit Here"), button:has-text("Sit Down")').first();
+    await sitBtn.waitFor({ timeout: 8000 });
+    await sitBtn.click();
+    await page.waitForTimeout(1000);
+    const input = page.locator('input[type="number"], input.buy-in-input').first();
+    await input.waitFor({ timeout: 4000 });
+    await input.fill(String(BUY_IN_AMOUNT));
+    const confirm = page.locator('button:has-text("Sit Down"), button:has-text("Confirm"), button:has-text("Join")').first();
+    if (await confirm.count()) await confirm.click();
+    console.log(`[Bot] Sat down with ${BUY_IN_AMOUNT} chips`);
+  } catch {
+    console.log('[Bot] Could not auto sit-down — please sit manually with 25 chips');
+  }
+}
+
+// --- Move to next buffered game ---
+async function moveToNextGame() {
+  if (!activePage || !gameBuffer.length) {
+    console.log('[Bot] No more games in buffer');
+    return;
+  }
+  await joinGame(activePage, gameBuffer.shift());
+}
+
 // --- Main ---
 async function main() {
   const browser = await chromium.launch({ headless: false });
   browser.on('page', page => { console.log('[Page] New tab'); attachWS(page); });
 
   const page = await browser.newPage();
+  activePage = page;
   attachWS(page);
-  await page.goto(URL);
 
   console.log(`[Bot] ${USE_AI ? `AI (${MODEL}, ${MODE})` : 'Capture only'} | ${runFile}`);
-  console.log('[Bot] Login and join your PokerNow game...');
+  console.log(`[Bot] MAX_HANDS=${MAX_HANDS}  HANDS_PER_GAME=${HANDS_PER_GAME}  BUY_IN=${BUY_IN_AMOUNT}`);
 
-  await new Promise(() => {}); // stay alive — WS events drive everything
+  await scrapeAndBufferGames(page);
+  if (gameBuffer.length) {
+    await joinGame(page, gameBuffer.shift());
+  } else {
+    console.log('[Bot] No eligible games found — waiting for manual join...');
+  }
+
+  await new Promise(() => {}); // stay alive
 }
 
 main().catch(console.error);

@@ -1,5 +1,52 @@
 [
   {
+    "file": "run_2026-05-06T03-49-13-935Z.json",
+    "timestamp": "2026-05-06T03:49:13.935Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 20,
+    "decisions": 23,
+    "wins": 0,
+    "losses": 6
+  },
+  {
+    "file": "run_2026-05-06T03-36-02-501Z.json",
+    "timestamp": "2026-05-06T03:36:02.502Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 4,
+    "decisions": 4
+  },
+  {
+    "file": "run_2026-05-05T06-27-57-616Z.json",
+    "timestamp": "2026-05-05T06:27:57.616Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 8,
+    "decisions": 9
+  },
+  {
+    "file": "run_2026-05-05T06-02-03-698Z.json",
+    "timestamp": "2026-05-05T06:02:03.698Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 3,
+    "decisions": 4
+  },
+  {
+    "file": "run_2026-05-05T05-57-20-823Z.json",
+    "timestamp": "2026-05-05T05:57:20.823Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 2,
+    "decisions": 2
+  },
+  {
     "file": "run_2026-05-05T05-47-05-573Z.json",
     "timestamp": "2026-05-05T05:47:05.573Z",
     "ai": true,

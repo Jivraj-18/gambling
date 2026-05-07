@@ -1,0 +1,781 @@
+{
+  "meta": {
+    "file": "run_2026-05-05T06-02-03-698Z.json",
+    "timestamp": "2026-05-05T06:02:03.698Z",
+    "ai": true,
+    "mode": "auto",
+    "model": "gemini-3.1-pro-preview",
+    "hands": 2,
+    "decisions": 3
+  },
+  "hands": [
+    {
+      "handId": 1,
+      "holeCards": [
+        "4h",
+        "Qs"
+      ],
+      "startedAt": "2026-05-05T06:03:03.035Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-05T06:03:03.035Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 18,
+            "holeCards": [
+              "4h",
+              "Qs"
+            ],
+            "handName": null,
+            "players": {
+              "Hodd3D4otV": {
+                "disconnectedSince": "<D>",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "stack": 22,
+                "dAC": false
+              },
+              "tMyf5_owz0": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "tMyf5_owz0",
+                "status": "inGame",
+                "name": "Jane.",
+                "sitAsAway": false,
+                "stack": 182,
+                "dAC": false
+              },
+              "xLvRUvMK2M": {
+                "winCount": 10,
+                "quitCount": 0,
+                "id": "xLvRUvMK2M",
+                "status": "inGame",
+                "name": "peter095752",
+                "stack": 152
+              },
+              "c8z3-PV595": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "c8z3-PV595",
+                "status": "inGame",
+                "name": "Tooraj1",
+                "stack": 593
+              },
+              "JTDfBv9xgM": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "JTDfBv9xgM",
+                "status": "standingUp",
+                "name": "Degenerate03",
+                "stack": 462,
+                "disconnectedSince": 1777960506227,
+                "dAC": false
+              },
+              "sinHm6wu4I": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "sinHm6wu4I",
+                "status": "standingUp",
+                "name": "jimmy-1010",
+                "stack": 200,
+                "dAC": false
+              },
+              "ho2TwzXFKu": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "ho2TwzXFKu",
+                "status": "inGame",
+                "name": "Lucky Jenny",
+                "stack": 40
+              },
+              "l4TJwm-ce9": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "l4TJwm-ce9",
+                "status": "inGame",
+                "name": "Jabs",
+                "stack": 266
+              },
+              "I8MMA_Wqjq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "I8MMA_Wqjq",
+                "status": "waitingNextGameToEnter",
+                "name": "Count002",
+                "stack": 133,
+                "dAC": false
+              },
+              "oP9l3sHXqo": {
+                "winCount": 5,
+                "quitCount": 1,
+                "id": "oP9l3sHXqo",
+                "status": "inGame",
+                "name": "AndyKay",
+                "stack": 714
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "tMyf5_owz0"
+              ],
+              [
+                3,
+                "c8z3-PV595"
+              ],
+              [
+                4,
+                "oP9l3sHXqo"
+              ],
+              [
+                5,
+                "ho2TwzXFKu"
+              ],
+              [
+                6,
+                "xLvRUvMK2M"
+              ],
+              [
+                7,
+                "I8MMA_Wqjq"
+              ],
+              [
+                8,
+                "l4TJwm-ce9"
+              ],
+              [
+                9,
+                "sinHm6wu4I"
+              ],
+              [
+                10,
+                "JTDfBv9xgM"
+              ]
+            ],
+            "tableBets": {
+              "tMyf5_owz0": 1,
+              "c8z3-PV595": 2,
+              "ho2TwzXFKu": 2,
+              "xLvRUvMK2M": 2,
+              "l4TJwm-ce9": 11
+            },
+            "cRPI": [
+              "l4TJwm-ce9"
+            ],
+            "callAmount": 11,
+            "bigBlind": 2
+          },
+          "ai_metadata": {
+            "prompt": "=== SITUATION ===\nStreet         : Pre-flop\nHole cards     : 4h Qs\nBoard          : (none — pre-flop)\nPot            : 18   To call: 11  [38% equity needed]\nHero stack     : 22  (11 BBs)\nSPR            : 1.2  (stack-to-pot ratio)\nActive players : 10 of 10 still in\nBig blind      : 2\nPosition       : seat 1 of 10 (button not tracked — use seat order as proxy)\n\n=== ALL PLAYERS (seat order) ===\n★ [seat 1] Jivra          stack=   22 (11BB)  bet=    0  inGame\n  [seat 2] Jane.          stack=  182 (91BB)  bet=    1  inGame\n  [seat 3] Tooraj1        stack=  593 (297BB)  bet=    2  inGame\n  [seat 4] AndyKay        stack=  714 (357BB)  bet=    0  inGame\n  [seat 5] Lucky Jenny    stack=   40 (20BB)  bet=    2  inGame\n  [seat 6] peter095752    stack=  152 (76BB)  bet=    2  inGame\n  [seat 7] Count002       stack=  133 (67BB)  bet=    0  waitingNextGameToEnter\n  [seat 8] Jabs           stack=  266 (133BB)  bet=   11  inGame\n  [seat 9] jimmy-1010     stack=  200 (100BB)  bet=    0  standingUp\n  [seat 10] Degenerate03   stack=  462 (231BB)  bet=    0  standingUp\n\n=== BETTING THIS STREET ===\n  Jane.           : 1  (6% of pot)\n  Tooraj1         : 2  (11% of pot)\n  Lucky Jenny     : 2  (11% of pot)\n  peter095752     : 2  (11% of pot)\n  Jabs            : 11  (61% of pot)\n\n=== THIS HAND HISTORY ===\n  First decision this hand\n\n=== RECENT HANDS ===\n  No prior hands this session\n\n=== OPPONENT TENDENCIES ===\n  Insufficient data yet\n\n=== AVAILABLE ACTIONS ===\nCall 11  |  Raise  |  Fold",
+            "raw": "```json\n{\"decision\":\"FOLD\",\"amount\":0,\"reasoning\":\"Q4 offsuit is unplayable trash from any position, especially facing a large 5.5x raise. With 11BBs we are playing a strict push/fold strategy, and this hand is miles outside our shoving range.\"}\n```",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "Q4 offsuit is unplayable trash from any position, especially facing a large 5.5x raise. With 11BBs we are playing a strict push/fold strategy, and this hand is miles outside our shoving range."
+          },
+          "actual_action": "FOLD",
+          "mode": "auto"
+        }
+      ],
+      "analysis": {
+        "steps": [
+          {
+            "verdict": "correct",
+            "note": "Folding Q4 offsuit with an 11BB stack against a massive 5.5x raise is an absolutely mandatory decision."
+          }
+        ],
+        "overall": "Well played",
+        "summary": "You correctly adhered to short-stack fundamentals by folding junk to heavy pre-flop aggression. Committing any chips with Q4 offsuit in this spot would have been a massive blunder."
+      }
+    },
+    {
+      "handId": 2,
+      "holeCards": [
+        "3h",
+        "5d"
+      ],
+      "startedAt": "2026-05-05T06:04:06.010Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-05T06:04:06.010Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [
+              "4h",
+              "8c",
+              "Kc"
+            ],
+            "pot": 80,
+            "holeCards": [
+              "3h",
+              "5d"
+            ],
+            "handName": null,
+            "players": {
+              "Hodd3D4otV": {
+                "disconnectedSince": "<D>",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "stack": 12,
+                "dAC": false
+              },
+              "tMyf5_owz0": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "tMyf5_owz0",
+                "status": "inGame",
+                "name": "Jane.",
+                "sitAsAway": false,
+                "stack": 161,
+                "dAC": false
+              },
+              "xLvRUvMK2M": {
+                "winCount": 10,
+                "quitCount": 0,
+                "id": "xLvRUvMK2M",
+                "status": "inGame",
+                "name": "peter095752",
+                "stack": 140
+              },
+              "c8z3-PV595": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "c8z3-PV595",
+                "status": "inGame",
+                "name": "Tooraj1",
+                "stack": 572
+              },
+              "JTDfBv9xgM": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "JTDfBv9xgM",
+                "status": "standingUp",
+                "name": "Degenerate03",
+                "stack": 462,
+                "disconnectedSince": 1777960506227,
+                "dAC": false
+              },
+              "sinHm6wu4I": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "sinHm6wu4I",
+                "status": "standingUp",
+                "name": "jimmy-1010",
+                "stack": 200,
+                "dAC": false
+              },
+              "ho2TwzXFKu": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "ho2TwzXFKu",
+                "status": "inGame",
+                "name": "Lucky Jenny",
+                "stack": 19,
+                "disconnectedSince": "<D>"
+              },
+              "l4TJwm-ce9": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "l4TJwm-ce9",
+                "status": "inGame",
+                "name": "Jabs",
+                "stack": 291
+              },
+              "I8MMA_Wqjq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "I8MMA_Wqjq",
+                "status": "inGame",
+                "name": "Count002",
+                "stack": 123,
+                "dAC": false
+              },
+              "oP9l3sHXqo": {
+                "winCount": 5,
+                "quitCount": 1,
+                "id": "oP9l3sHXqo",
+                "status": "inGame",
+                "name": "AndyKay",
+                "stack": 704
+              },
+              "u1OVM1Zdi4": {
+                "winCount": 0,
+                "quitCount": 2,
+                "id": "u1OVM1Zdi4",
+                "status": "watching",
+                "name": "tfu99"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "tMyf5_owz0"
+              ],
+              [
+                3,
+                "c8z3-PV595"
+              ],
+              [
+                4,
+                "oP9l3sHXqo"
+              ],
+              [
+                5,
+                "ho2TwzXFKu"
+              ],
+              [
+                6,
+                "xLvRUvMK2M"
+              ],
+              [
+                7,
+                "I8MMA_Wqjq"
+              ],
+              [
+                8,
+                "l4TJwm-ce9"
+              ],
+              [
+                9,
+                "sinHm6wu4I"
+              ],
+              [
+                10,
+                "JTDfBv9xgM"
+              ]
+            ],
+            "tableBets": {
+              "ho2TwzXFKu": "<D>",
+              "xLvRUvMK2M": "<D>",
+              "I8MMA_Wqjq": "<D>",
+              "l4TJwm-ce9": "<D>",
+              "Hodd3D4otV": "<D>",
+              "tMyf5_owz0": "<D>",
+              "c8z3-PV595": "<D>",
+              "oP9l3sHXqo": "<D>"
+            },
+            "cRPI": [],
+            "callAmount": 0,
+            "bigBlind": 2
+          },
+          "ai_metadata": {
+            "prompt": "=== SITUATION ===\nStreet         : Pre-flop\nHole cards     : 3h 5d\nBoard          : (none — pre-flop)\nPot            : 50\nHero stack     : 22  (11 BBs)\nSPR            : 0.4  (stack-to-pot ratio)\nActive players : 10 of 10 still in\nBig blind      : 2\nPosition       : seat 1 of 10 (button not tracked — use seat order as proxy)\n\n=== ALL PLAYERS (seat order) ===\n★ [seat 1] Jivra          stack=   22 (11BB)  bet=   10  inGame\n  [seat 2] Jane.          stack=  171 (86BB)  bet=    0  inGame\n  [seat 3] Tooraj1        stack=  582 (291BB)  bet=    0  inGame\n  [seat 4] AndyKay        stack=  714 (357BB)  bet=    0  inGame\n  [seat 5] Lucky Jenny    stack=   29 (15BB)  bet=   10  inGame\n  [seat 6] peter095752    stack=  150 (75BB)  bet=   10  inGame\n  [seat 7] Count002       stack=  133 (67BB)  bet=   10  inGame\n  [seat 8] Jabs           stack=  301 (151BB)  bet=   10  inGame\n  [seat 9] jimmy-1010     stack=  200 (100BB)  bet=    0  standingUp\n  [seat 10] Degenerate03   stack=  462 (231BB)  bet=    0  standingUp\n\n=== BETTING THIS STREET ===\n  Lucky Jenny     : 10  (20% of pot)\n  peter095752     : 10  (20% of pot)\n  Count002        : 10  (20% of pot)\n  Jabs            : 10  (20% of pot)\n  Jivra           : 10  (20% of pot)\n\n=== THIS HAND HISTORY ===\n  First decision this hand\n\n=== RECENT HANDS ===\n  Hand -1 [4h Qs]: FOLD\n\n=== OPPONENT TENDENCIES ===\n  Insufficient data yet\n\n=== AVAILABLE ACTIONS ===\nFold",
+            "raw": "```json\n{\"decision\":\"FOLD\",\"amount\":0,\"reasoning\":\"35o is absolute trash, and facing multiple opponents with only the option to fold available, letting go of this disconnected offsuit garbage is the only correct play.\"}\n```",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "35o is absolute trash, and facing multiple opponents with only the option to fold available, letting go of this disconnected offsuit garbage is the only correct play."
+          },
+          "actual_action": "FOLD",
+          "mode": "auto"
+        },
+        {
+          "timestamp": "2026-05-05T06:04:52.998Z",
+          "street": "flop",
+          "game_state": {
+            "board": [
+              "4h",
+              "8c",
+              "Kc"
+            ],
+            "pot": 8080,
+            "holeCards": [
+              "3h",
+              "5d"
+            ],
+            "handName": null,
+            "players": {
+              "Hodd3D4otV": {
+                "disconnectedSince": "<D>",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "stack": 12,
+                "dAC": false
+              },
+              "tMyf5_owz0": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "tMyf5_owz0",
+                "status": "inGame",
+                "name": "Jane.",
+                "sitAsAway": false,
+                "stack": 161,
+                "dAC": false
+              },
+              "xLvRUvMK2M": {
+                "winCount": 10,
+                "quitCount": 0,
+                "id": "xLvRUvMK2M",
+                "status": "inGame",
+                "name": "peter095752",
+                "stack": 140
+              },
+              "c8z3-PV595": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "c8z3-PV595",
+                "status": "inGame",
+                "name": "Tooraj1",
+                "stack": 572
+              },
+              "JTDfBv9xgM": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "JTDfBv9xgM",
+                "status": "standingUp",
+                "name": "Degenerate03",
+                "stack": 462,
+                "disconnectedSince": 1777960506227,
+                "dAC": false
+              },
+              "sinHm6wu4I": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "sinHm6wu4I",
+                "status": "standingUp",
+                "name": "jimmy-1010",
+                "stack": 200,
+                "dAC": false
+              },
+              "ho2TwzXFKu": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "ho2TwzXFKu",
+                "status": "inGame",
+                "name": "Lucky Jenny",
+                "stack": 19,
+                "disconnectedSince": "<D>"
+              },
+              "l4TJwm-ce9": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "l4TJwm-ce9",
+                "status": "inGame",
+                "name": "Jabs",
+                "stack": 291
+              },
+              "I8MMA_Wqjq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "I8MMA_Wqjq",
+                "status": "inGame",
+                "name": "Count002",
+                "stack": 123,
+                "dAC": false
+              },
+              "oP9l3sHXqo": {
+                "winCount": 5,
+                "quitCount": 1,
+                "id": "oP9l3sHXqo",
+                "status": "inGame",
+                "name": "AndyKay",
+                "stack": 704,
+                "dAC": false
+              },
+              "u1OVM1Zdi4": {
+                "winCount": 0,
+                "quitCount": 2,
+                "id": "u1OVM1Zdi4",
+                "status": "watching",
+                "name": "tfu99"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "tMyf5_owz0"
+              ],
+              [
+                3,
+                "c8z3-PV595"
+              ],
+              [
+                4,
+                "oP9l3sHXqo"
+              ],
+              [
+                5,
+                "ho2TwzXFKu"
+              ],
+              [
+                6,
+                "xLvRUvMK2M"
+              ],
+              [
+                7,
+                "I8MMA_Wqjq"
+              ],
+              [
+                8,
+                "l4TJwm-ce9"
+              ],
+              [
+                9,
+                "sinHm6wu4I"
+              ],
+              [
+                10,
+                "JTDfBv9xgM"
+              ]
+            ],
+            "tableBets": {
+              "ho2TwzXFKu": "check",
+              "xLvRUvMK2M": "check",
+              "I8MMA_Wqjq": "check",
+              "l4TJwm-ce9": "check",
+              "Hodd3D4otV": "<D>",
+              "tMyf5_owz0": "<D>",
+              "c8z3-PV595": "check",
+              "oP9l3sHXqo": "check"
+            },
+            "cRPI": [
+              "c8z3-PV595",
+              "oP9l3sHXqo",
+              "ho2TwzXFKu",
+              "xLvRUvMK2M",
+              "I8MMA_Wqjq",
+              "l4TJwm-ce9"
+            ],
+            "callAmount": 2,
+            "bigBlind": 2
+          },
+          "ai_metadata": {
+            "prompt": "=== SITUATION ===\nStreet         : Flop\nHole cards     : 3h 5d\nBoard          : 4h 8c Kc\nPot            : 8080   To call: 2  [0% equity needed]\nHero stack     : 12  (6 BBs)\nSPR            : 0.0  (stack-to-pot ratio)\nActive players : 10 of 10 still in\nBig blind      : 2\nPosition       : seat 1 of 10 (button not tracked — use seat order as proxy)\n\n=== ALL PLAYERS (seat order) ===\n★ [seat 1] Jivra          stack=   12 (6BB)  bet=    0  inGame\n  [seat 2] Jane.          stack=  161 (81BB)  bet=    0  inGame\n  [seat 3] Tooraj1        stack=  572 (286BB)  bet=check  inGame\n  [seat 4] AndyKay        stack=  704 (352BB)  bet=check  inGame\n  [seat 5] Lucky Jenny    stack=   19 (10BB)  bet=check  inGame\n  [seat 6] peter095752    stack=  140 (70BB)  bet=check  inGame\n  [seat 7] Count002       stack=  123 (62BB)  bet=check  inGame\n  [seat 8] Jabs           stack=  291 (146BB)  bet=check  inGame\n  [seat 9] jimmy-1010     stack=  200 (100BB)  bet=    0  standingUp\n  [seat 10] Degenerate03   stack=  462 (231BB)  bet=    0  standingUp\n\n=== BETTING THIS STREET ===\n  Lucky Jenny     : check  (NaN% of pot)\n  peter095752     : check  (NaN% of pot)\n  Count002        : check  (NaN% of pot)\n  Jabs            : check  (NaN% of pot)\n  Jivra           : <D>  (NaN% of pot)\n  Jane.           : <D>  (NaN% of pot)\n  Tooraj1         : check  (NaN% of pot)\n  AndyKay         : check  (NaN% of pot)\n\n=== THIS HAND HISTORY ===\n  1. [pre-flop] FOLD  pot=80  bets={Lucky Jenny:<D> peter095752:<D> Count002:<D> Jabs:<D> Jivra:<D> Jane.:<D> Tooraj1:<D> AndyKay:<D>}\n\n=== RECENT HANDS ===\n  Hand -1 [4h Qs]: FOLD\n\n=== OPPONENT TENDENCIES ===\n  Jivra: folds 0%, bets 33% (3 hands)\n  Jane.: folds 0%, bets 33% (3 hands)\n  Tooraj1: folds 0%, bets 33% (3 hands)\n  AndyKay: folds 0%, bets 0% (3 hands)\n  Lucky Jenny: folds 0%, bets 67% (3 hands)\n  peter095752: folds 0%, bets 67% (3 hands)\n  Count002: folds 0%, bets 33% (3 hands)\n  Jabs: folds 0%, bets 67% (3 hands)\n  jimmy-1010: folds 0%, bets 0% (3 hands)\n  Degenerate03: folds 0%, bets 0% (3 hands)\n\n=== AVAILABLE ACTIONS ===\nCheck  |  Bet 2  |  Bet  |  Fold",
+            "raw": "{\"decision\":\"CHECK\",\"amount\":0,\"reasoning\":\"Checking is free, and with absolute air (5-high, no draw) in a massive multiway pot, there is zero reason to commit any of our micro-stack here.\"}",
+            "decision": "CHECK",
+            "amount": 0,
+            "reasoning": "Checking is free, and with absolute air (5-high, no draw) in a massive multiway pot, there is zero reason to commit any of our micro-stack here."
+          },
+          "actual_action": "CHECK",
+          "mode": "auto"
+        }
+      ],
+      "analysis": {
+        "steps": [
+          {
+            "verdict": "correct",
+            "note": "Folding 35o pre-flop is universally the right move as it is one of the weakest starting hands in poker."
+          },
+          {
+            "verdict": "correct",
+            "note": "Checking with just five-high and zero draw equity in a massive multiway pot is completely standard and mandatory."
+          }
+        ],
+        "overall": "Well played",
+        "summary": "You correctly identified that 35o is an unplayable trash hand that should automatically hit the muck pre-flop. In the event you ended up seeing the flop (such as being in the big blind), checking with absolute air is the only logical choice to protect your stack."
+      }
+    },
+    {
+      "handId": 3,
+      "holeCards": [
+        "3d",
+        "Ah"
+      ],
+      "startedAt": "2026-05-05T06:06:20.142Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-05T06:06:20.142Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 6,
+            "holeCards": [
+              "3d",
+              "Ah"
+            ],
+            "handName": null,
+            "players": {
+              "Hodd3D4otV": {
+                "disconnectedSince": "<D>",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "stack": 12,
+                "dAC": false
+              },
+              "tMyf5_owz0": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "tMyf5_owz0",
+                "status": "inGame",
+                "name": "Jane.",
+                "sitAsAway": false,
+                "stack": 161,
+                "dAC": false
+              },
+              "xLvRUvMK2M": {
+                "winCount": 10,
+                "quitCount": 0,
+                "id": "xLvRUvMK2M",
+                "status": "inGame",
+                "name": "peter095752",
+                "stack": 100
+              },
+              "c8z3-PV595": {
+                "winCount": 6,
+                "quitCount": 0,
+                "id": "c8z3-PV595",
+                "status": "inGame",
+                "name": "Tooraj1",
+                "stack": 692
+              },
+              "JTDfBv9xgM": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "JTDfBv9xgM",
+                "status": "standingUp",
+                "name": "Degenerate03",
+                "stack": 462,
+                "disconnectedSince": 1777960506227,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "sinHm6wu4I": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "sinHm6wu4I",
+                "status": "standingUp",
+                "name": "jimmy-1010",
+                "stack": 200,
+                "dAC": false
+              },
+              "ho2TwzXFKu": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "ho2TwzXFKu",
+                "status": "inGame",
+                "name": "Lucky Jenny",
+                "stack": 19,
+                "disconnectedSince": "<D>"
+              },
+              "l4TJwm-ce9": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "l4TJwm-ce9",
+                "status": "inGame",
+                "name": "Jabs",
+                "stack": 291
+              },
+              "I8MMA_Wqjq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "I8MMA_Wqjq",
+                "status": "inGame",
+                "name": "Count002",
+                "stack": 123,
+                "dAC": false,
+                "disconnectedSince": 1777961172435
+              },
+              "oP9l3sHXqo": {
+                "winCount": 5,
+                "quitCount": 1,
+                "id": "oP9l3sHXqo",
+                "status": "standingUp",
+                "name": "AndyKay",
+                "stack": 704,
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "u1OVM1Zdi4": {
+                "winCount": 0,
+                "quitCount": 2,
+                "id": "u1OVM1Zdi4",
+                "status": "inGame",
+                "name": "tfu99",
+                "sitAsAway": false,
+                "stack": 150
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "tMyf5_owz0"
+              ],
+              [
+                3,
+                "c8z3-PV595"
+              ],
+              [
+                4,
+                "oP9l3sHXqo"
+              ],
+              [
+                5,
+                "ho2TwzXFKu"
+              ],
+              [
+                6,
+                "xLvRUvMK2M"
+              ],
+              [
+                7,
+                "I8MMA_Wqjq"
+              ],
+              [
+                8,
+                "l4TJwm-ce9"
+              ],
+              [
+                9,
+                "sinHm6wu4I"
+              ],
+              [
+                10,
+                "u1OVM1Zdi4"
+              ]
+            ],
+            "tableBets": {
+              "xLvRUvMK2M": 2,
+              "u1OVM1Zdi4": 2
+            },
+            "cRPI": [
+              "xLvRUvMK2M",
+              "u1OVM1Zdi4"
+            ],
+            "callAmount": 2,
+            "bigBlind": 2
+          },
+          "ai_metadata": {
+            "prompt": "=== SITUATION ===\nStreet         : Pre-flop\nHole cards     : 3d Ah\nBoard          : (none — pre-flop)\nPot            : 6   To call: 2  [25% equity needed]\nHero stack     : 12  (6 BBs)\nSPR            : 2.0  (stack-to-pot ratio)\nActive players : 10 of 10 still in\nBig blind      : 2\nPosition       : seat 1 of 10 (button not tracked — use seat order as proxy)\n\n=== ALL PLAYERS (seat order) ===\n★ [seat 1] Jivra          stack=   12 (6BB)  bet=    0  inGame\n  [seat 2] Jane.          stack=  161 (81BB)  bet=    0  inGame\n  [seat 3] Tooraj1        stack=  692 (346BB)  bet=    0  inGame\n  [seat 4] AndyKay        stack=  704 (352BB)  bet=    0  standingUp\n  [seat 5] Lucky Jenny    stack=   19 (10BB)  bet=    0  inGame\n  [seat 6] peter095752    stack=  100 (50BB)  bet=    2  inGame\n  [seat 7] Count002       stack=  123 (62BB)  bet=    0  inGame\n  [seat 8] Jabs           stack=  291 (146BB)  bet=    0  inGame\n  [seat 9] jimmy-1010     stack=  200 (100BB)  bet=    0  standingUp\n  [seat 10] tfu99          stack=  150 (75BB)  bet=    2  inGame\n\n=== BETTING THIS STREET ===\n  peter095752     : 2  (33% of pot)\n  tfu99           : 2  (33% of pot)\n\n=== THIS HAND HISTORY ===\n  First decision this hand\n\n=== RECENT HANDS ===\n  Hand -1 [3h 5d]: FOLD→CHECK\n  Hand -2 [4h Qs]: FOLD\n\n=== OPPONENT TENDENCIES ===\n  Jivra: folds 0%, bets 25% (4 hands)\n  Jane.: folds 0%, bets 25% (4 hands)\n  Tooraj1: folds 0%, bets 25% (4 hands)\n  AndyKay: folds 0%, bets 0% (4 hands)\n  Lucky Jenny: folds 0%, bets 50% (4 hands)\n  peter095752: folds 0%, bets 75% (4 hands)\n  Count002: folds 0%, bets 25% (4 hands)\n  Jabs: folds 0%, bets 50% (4 hands)\n  jimmy-1010: folds 0%, bets 0% (4 hands)\n  Degenerate03: folds 0%, bets 0% (3 hands)\n\n=== AVAILABLE ACTIONS ===\nCall 2  |  Raise  |  Fold",
+            "raw": "```json\n{\"decision\":\"RAISE\",\"amount\":12,\"reasoning\":\"With only 6 big blinds remaining, we are in a strict push/fold phase. A3o falls into the unexploitable 'any Ax' shoving range under 10BBs to steal the dead money or realize our equity.\"}\n```",
+            "decision": "RAISE",
+            "amount": 12,
+            "reasoning": "With only 6 big blinds remaining, we are in a strict push/fold phase. A3o falls into the unexploitable 'any Ax' shoving range under 10BBs to steal the dead money or realize our equity."
+          },
+          "actual_action": "RAISE",
+          "mode": "auto"
+        }
+      ]
+    }
+  ]
+}
