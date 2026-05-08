@@ -1,13 +1,12 @@
 {
-  "name": "poker-ai-bot",
-  "version": "1.0.0",
+  "name": "agent-gamble",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node gemini-live.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "playwright": "^1.44.0",
     "ws": "^8.20.0"
   }
 }
