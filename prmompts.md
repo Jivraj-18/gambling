@@ -1,67 +1,168 @@
-Build a local Node.js application using Playwright that automates play on PokerNow.club. The system must intercept WebSocket data for state tracking, use the Gemini API for strategic decisions, and log every move as a full state snapshot into a local game_log.json for a GitHub Pages replay UI.
+# Agent Gamble — Prompts
 
-1. Game Context & Technical Stack:
+Two separate prompts. Use them in order.
 
-    Game Type: Pot Limit Omaha Hi (PLO HI) — Crucial: The agent has 4 hole cards.
+---
 
-    Intelligence: Gemini API (via @google/generative-ai SDK).
+# PROMPT 1 — Play the Game
 
-    Automation: Playwright (Headed mode for initial testing).
+> Give this prompt to any coding agent (Claude, Gemini CLI, Cursor, etc.) along with the WebSocket URL of the active game.
 
-    Data Source: socket.io WebSocket interception.
+---
 
-2. WebSocket Interception (The "Eyes"):
-Monitor wss://[www.pokernow.com/socket.io/](https://www.pokernow.com/socket.io/).
+You are a coding agent. Your only job right now is to get `gemini-live.js` running against the active game. Do not do any analysis. Just play and capture everything.
 
-    Event registered: Capture the networkUsername and unique ID to identify the "Hero" seat.
+**Steps:**
 
-    Event gc (Game Context): This is the primary state provider. Maintain a master gameState object by merging these updates.
+1. The user will give you a WebSocket URL or curl command. Extract two things from it:
+   - `gameID` — from the URL parameter `?gameID=pgl...`
+   - `Cookie` — from the request headers
 
-    Event action: Use this to track the betting flow and opponent moves.
+2. Open `gemini-live.js` in this directory. Update only these two lines at the top:
+   ```js
+   const GAME_ID = '<extracted gameID>';
+   const COOKIE  = '<extracted cookie string>';
+   ```
 
-    Parsing: Socket.io frames start with prefixes like 42. Write a parser to strip these and handle the underlying JSON.
+3. Check the Google API key is set:
+   ```
+   echo $GOOGLE_API_KEY
+   ```
+   If it is empty, ask the user for it and set it: `export GOOGLE_API_KEY=<key>`
 
-3. DOM Selectors & Automation (The "Hand"):
-Use these verified selectors from the site's source code for execution:
+4. Kill any existing instance and start fresh:
+   ```
+   pkill -f gemini-live.js 2>/dev/null
+   nohup node gemini-live.js > /tmp/gemini-live.log 2>&1 &
+   ```
 
-    Turn Detection: div.table-player.you-player.decision-current. Only trigger the AI loop if this element is present.
+5. Confirm it connected — check `/tmp/gemini-live.log` for:
+   - `[WS] Connected` — WebSocket is live
+   - `[Hero] <id> | Stack: <n> | Cards: <cards>` — hero identified
 
-    Action Buttons:
+6. If you see a Gemini model error (404), run this to find the right model:
+   ```
+   curl -s "https://generativelanguage.googleapis.com/v1beta/models?key=$GOOGLE_API_KEY" | python3 -c "
+   import json,sys
+   for m in json.load(sys.stdin).get('models',[]):
+       if 'generateContent' in m.get('supportedGenerationMethods',[]):
+           print(m['name'],'|',m['displayName'])
+   "
+   ```
+   Pick the latest flash model, update the `model:` line in `gemini-live.js`, restart.
 
-        Fold: button.action-button.fold
+7. Monitor `/tmp/gemini-live.log` while the human plays. The bot handles everything:
+   - Detects hero's turn via WebSocket (`cPI` field)
+   - Sends full game state + betting history to Gemini
+   - Prints `🎯 GEMINI SAYS: FOLD/CALL/CHECK/RAISE X` — human clicks this
+   - Tracks every bet by every player (who, when, how much, which street)
+   - Saves structured data to `/tmp/session-data.json` after each hand
 
-        Check: button.action-button.check
+8. If the game ID changes (human moves to a new table), they will paste a new URL. Repeat from Step 2.
 
-        Call/Bet: button.action-button.call (Handle dynamic text like "Call 10" or "Bet 2").
+**Do not do any analysis. Just keep the bot running and the logs clean.**
 
-        Raise/Open: button.action-button.raise
+---
 
-    Betting Logic: If the decision is RAISE, click the raise button, locate the numeric input field, clear it, type the suggested_amount, and press Enter.
+**What gets captured automatically in `/tmp/session-data.json`:**
+```
+{
+  "gameId": "...",
+  "heroId": "...",
+  "hands": [
+    {
+      "handNumber": 1,
+      "holeCards": ["Ac", "Kd"],
+      "board": ["Jh", "5c", "2d", "Qs", "7h"],
+      "stackBefore": 500, "stackAfter": 480, "stackChange": -20, "outcome": "LOSS",
+      "bettingTimeline": [
+        { "time": "HH:MM:SS", "street": "pre-flop", "playerName": "Alex",
+          "action": "RAISE", "amount": 20, "totalInPot": 20, "pot": 25 }
+      ],
+      "playerContributions": { "playerId": totalChips },
+      "geminiCalls": [
+        { "street": "pre-flop", "promptSent": "<full prompt>",
+          "fullResponse": "<full Gemini response>", "decision": "CALL",
+          "gameSnapshot": { "holeCards", "board", "pot", "callAmount", "stack", "opponents" } }
+      ],
+      "heroActions": [
+        { "street": "pre-flop", "geminiDecision": "CALL",
+          "actualAction": "RAISE", "amountPlayed": 40,
+          "stackBefore": 500, "stackAfter": 460, "followed": false }
+      ]
+    }
+  ]
+}
+```
 
-    Humanization: Apply a randomized delay of 2–5 seconds before performing any DOM action.
+---
 
-4. Intelligence Integration (Gemini):
-When it is Hero's turn, send a prompt to Gemini 1.5:
+# PROMPT 2 — Analyse the Session
 
-    System Prompt: "You are a Pro PLO HI Analyst. You are playing Pot Limit Omaha (4 hole cards). Provide GTO-based advice."
+> Give this prompt to any coding agent after the game session is over.
 
-    Input State: Current hole cards, board texture, pot size, stack sizes, and the last 5 logs for context.
+---
 
-    Required Output: Strict JSON: {"decision": "FOLD|CHECK|CALL|RAISE", "amount": number, "reasoning": "string"}.
+You are a coding agent. The poker session has finished. `gemini-live.js` has been stopped. Your job is to read the captured data and produce a domain expert report.
 
-5. Rich Logging for Replay UI:
-Every time a move is made (automated or manual), append a State-Complete Snapshot to game_log.json:
+**Steps:**
 
-    Include the full gameState (all players, stacks, cards, pot).
+1. Read the session data:
+   ```
+   /tmp/session-data.json   ← structured hand-by-hand data
+   /tmp/gemini-live.log     ← full narrative log with all prompts and responses
+   ```
 
-    Include ai_metadata: The exact prompt sent, the raw reasoning from Gemini, and the suggested move.
+2. For each hand (show latest hand first), produce a section with:
 
-    Include actual_action: What the script successfully clicked in the DOM.
+   **Hand summary table:**
+   | Field | Value |
+   |-------|-------|
+   | Cards | hero's hole cards |
+   | Board | final board |
+   | Result | WIN / LOSS / BREAK EVEN and chip amount |
+   | Stack | before → after |
 
-6. Implementation Details:
+   **Betting timeline table** — who bet how much on which street, total invested per player.
 
-    Use an atomic write or a stream for game_log.json to prevent data loss.
+   **Gemini decisions** — full prompt sent, full response received, final decision extracted.
 
-    Maintain a "Turn Lock" to ensure Gemini is only called once per turn.
+   **Hero vs Gemini** — where hero followed Gemini, where they overrode, what actually happened.
 
-    Provide a clean console output showing: [Turn Detected] -> [Gemini Reasoning] -> [Action Executed].
+   **7 Domain Expert Questions** (answer each in 2–3 sentences):
+   1. Who was likely bluffing — based on bet sizing and timing?
+   2. How confident was the winning hand? Was the hero's hand strong enough?
+   3. How much should the hero have been willing to raise?
+   4. After hitting the raise limit — bluff or fold?
+   5. Dominant feeling: Fear / Hope / Greed / None?
+   6. How significant was the stack impact?
+   7. Overall: Good / Ok / Bad play?
+
+   **Turning point** — exact moment the hand went right or wrong.
+   **Lesson** — one thing to do differently next time in the same spot.
+
+3. After all hands, add a **Session Summary**:
+   - Total hands, net stack change, win/loss record
+   - Biggest single mistake across all hands
+   - Pattern: what type of spots are losing the most chips?
+   - Where Gemini was consistently right or wrong
+   - Where overriding Gemini helped vs hurt
+   - Top 3 recommendations for next session
+
+4. Save the report to:
+   ```
+   /tmp/domain-expert-report.md
+   ```
+
+**The domain expert receiving this report has not seen the game. Write as if explaining everything from scratch.**
+
+---
+
+**Key files reference:**
+| File | What it contains |
+|------|-----------------|
+| `gemini-live.js` | The bot (Prompt 1 runs this) |
+| `/tmp/gemini-live.log` | Full live log — every event, prompt, response |
+| `/tmp/session-data.json` | Structured JSON — every hand with full data |
+| `/tmp/domain-expert-report.md` | Output of Prompt 2 |
+| `domain-expert-prakhar.md` | The 7 domain expert questions (source) |

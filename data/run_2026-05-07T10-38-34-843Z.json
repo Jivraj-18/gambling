@@ -1,0 +1,458 @@
+{
+  "meta": {
+    "file": "run_2026-05-07T10-38-34-843Z.json",
+    "timestamp": "2026-05-07T10:38:34.844Z",
+    "ai": true,
+    "agent": "claude-live",
+    "mode": "auto",
+    "model": null,
+    "hands": 1,
+    "decisions": 1,
+    "wins": 0,
+    "losses": 1
+  },
+  "hands": [
+    {
+      "handId": 1,
+      "holeCards": [
+        "Ts",
+        "5h"
+      ],
+      "finalBoard": [
+        "2c",
+        "6h",
+        "Tc",
+        "9d",
+        "4c"
+      ],
+      "showdownCards": {
+        "ivey12": [
+          "9d",
+          "Ad"
+        ],
+        "Dohman": [
+          "Qh",
+          "Ah"
+        ],
+        "阿达我去": [
+          "Kc",
+          "2c"
+        ],
+        "psy69": [
+          "Qs",
+          "Jc"
+        ],
+        "Lo04": [
+          "Kh",
+          "As"
+        ]
+      },
+      "startedAt": "2026-05-07T10:41:45.263Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T10:41:45.263Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 1,
+            "holeCards": [
+              "Ts",
+              "5h"
+            ],
+            "handName": null,
+            "players": {
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "dAC": false
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 15,
+                "dAC": false,
+                "disconnectedSince": "<D>",
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "C4EmYSI3iT": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 141
+              },
+              "p6lUDjKwcv": {
+                "winCount": 9,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 222
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "dAC": false,
+                "disconnectedSince": 1778150493373
+              },
+              "pQ5FBmLGiC": {
+                "winCount": 3,
+                "quitCount": 2,
+                "id": "pQ5FBmLGiC",
+                "status": "inGame",
+                "name": "CosmicBob",
+                "stack": 48,
+                "dAC": false,
+                "waitBB": "<D>"
+              },
+              "4K60yBvzG-": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 1,
+                "id": "4K60yBvzG-",
+                "status": "waitingNextGameToEnter",
+                "name": "阿达我去",
+                "stack": 100,
+                "nPY": true
+              },
+              "ZzJvNtIFEW": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "ZzJvNtIFEW",
+                "status": "inGame",
+                "name": "最后一手",
+                "stack": 97
+              },
+              "gv_yYrd6Es": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "gv_yYrd6Es",
+                "status": "inGame",
+                "name": "psy69",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "1aHiL0tLwi": {
+                "winCount": 2,
+                "quitCount": 1,
+                "id": "1aHiL0tLwi",
+                "status": "inGame",
+                "name": "Lo04",
+                "stack": 218,
+                "nPY": "<D>"
+              },
+              "vsXIh5TnW5": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "vsXIh5TnW5",
+                "status": "waitingNextGameToEnter",
+                "name": "Quacky_55555",
+                "stack": 100,
+                "nPY": true
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                4,
+                "4K60yBvzG-"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                6,
+                "vsXIh5TnW5"
+              ],
+              [
+                7,
+                "1aHiL0tLwi"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                9,
+                "pQ5FBmLGiC"
+              ],
+              [
+                10,
+                "ZzJvNtIFEW"
+              ]
+            ],
+            "tableBets": {
+              "p6lUDjKwcv": 6,
+              "C4EmYSI3iT": 6,
+              "1aHiL0tLwi": 14
+            },
+            "cRPI": [
+              "1aHiL0tLwi"
+            ],
+            "callAmount": 4,
+            "bigBlind": 2,
+            "showdownCards": {
+              "ivey12": [
+                "9d",
+                "Ad"
+              ],
+              "Dohman": [
+                "Qc",
+                "Ac"
+              ],
+              "阿达我去": [
+                "Kc",
+                "2c"
+              ],
+              "psy69": [
+                "Qs",
+                "Jc"
+              ],
+              "Lo04": [
+                "Ks",
+                "Ac"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "",
+            "raw": "",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "Timeout fallback"
+          },
+          "actual_action": "MISSED",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "LOSS",
+      "stackChange": -2
+    },
+    {
+      "handId": 2,
+      "holeCards": [
+        "Jd",
+        "Qh"
+      ],
+      "startedAt": "2026-05-07T10:43:45.039Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T10:43:45.039Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 0,
+            "holeCards": [
+              "Jd",
+              "Qh"
+            ],
+            "handName": null,
+            "players": {
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "dAC": false
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 13,
+                "dAC": false,
+                "disconnectedSince": "<D>",
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "C4EmYSI3iT": {
+                "winCount": 8,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 135
+              },
+              "p6lUDjKwcv": {
+                "winCount": 9,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 4,
+                "disconnectedSince": 1778150567754
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "dAC": false,
+                "disconnectedSince": 1778150493373
+              },
+              "pQ5FBmLGiC": {
+                "winCount": 3,
+                "quitCount": 2,
+                "id": "pQ5FBmLGiC",
+                "status": "inGame",
+                "name": "CosmicBob",
+                "stack": 48,
+                "dAC": false,
+                "waitBB": "<D>"
+              },
+              "4K60yBvzG-": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 1,
+                "id": "4K60yBvzG-",
+                "status": "inGame",
+                "name": "阿达我去",
+                "stack": 100,
+                "nPY": "<D>"
+              },
+              "ZzJvNtIFEW": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "ZzJvNtIFEW",
+                "status": "inGame",
+                "name": "最后一手",
+                "stack": 97
+              },
+              "gv_yYrd6Es": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "gv_yYrd6Es",
+                "status": "inGame",
+                "name": "psy69",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "1aHiL0tLwi": {
+                "winCount": 3,
+                "quitCount": 1,
+                "id": "1aHiL0tLwi",
+                "status": "inGame",
+                "name": "Lo04",
+                "stack": 445,
+                "nPY": "<D>"
+              },
+              "vsXIh5TnW5": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "vsXIh5TnW5",
+                "status": "waitingNextGameToEnter",
+                "name": "Quacky_55555",
+                "stack": 100,
+                "nPY": true
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                4,
+                "4K60yBvzG-"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                6,
+                "vsXIh5TnW5"
+              ],
+              [
+                7,
+                "1aHiL0tLwi"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                9,
+                "pQ5FBmLGiC"
+              ],
+              [
+                10,
+                "ZzJvNtIFEW"
+              ]
+            ],
+            "tableBets": {
+              "pQ5FBmLGiC": 2,
+              "1aHiL0tLwi": 12
+            },
+            "cRPI": [
+              "1aHiL0tLwi"
+            ],
+            "callAmount": 2,
+            "bigBlind": 2,
+            "showdownCards": {}
+          },
+          "ai_metadata": {
+            "prompt": "{\"street\":\"pre-flop\",\"holeCards\":[\"Jd\",\"Qh\"],\"board\":[],\"pot\":0,\"callAmount\":2,\"heroStack\":13,\"stackBB\":7,\"bigBlind\":2,\"activePlayers\":10,\"totalPlayers\":10,\"players\":[{\"name\":\"Jivra\",\"stack\":13,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":true},{\"name\":\"Bolern\",\"stack\":100,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"ivey12\",\"stack\":135,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"阿达我去\",\"stack\":100,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"xtt\",\"stack\":239,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"Quacky_55555\",\"stack\":100,\"bet\":\"0\",\"status\":\"waitingNextGameToEnter\",\"isHero\":false},{\"name\":\"Lo04\",\"stack\":445,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Dohman\",\"stack\":4,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"CosmicBob\",\"stack\":48,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"最后一手\",\"stack\":97,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false}],\"tableBets\":{\"pQ5FBmLGiC\":2},\"availableActions\":[\"Call 2\",\"Raise\",\"Fold\"],\"handName\":null,\"pastHands\":[{\"holeCards\":[\"Ts\",\"5h\"],\"decisions\":[\"MISSED\"]}],\"opponentTendencies\":{\"Jivra\":{\"foldPct\":0,\"betPct\":0},\"Bolern\":{\"foldPct\":0,\"betPct\":0},\"ivey12\":{\"foldPct\":0,\"betPct\":0},\"阿达我去\":{\"foldPct\":0,\"betPct\":0},\"xtt\":{\"foldPct\":0,\"betPct\":0},\"Lo04\":{\"foldPct\":0,\"betPct\":0},\"Dohman\":{\"foldPct\":0,\"betPct\":50},\"CosmicBob\":{\"foldPct\":0,\"betPct\":50},\"最后一手\":{\"foldPct\":0,\"betPct\":0}}}",
+            "raw": "{\"decision\":\"RAISE\",\"amount\":13,\"reasoning\":\"QJo at 7BB is in shove range - broadway hand, must shove or fold, not call\"}",
+            "decision": "RAISE",
+            "amount": 13,
+            "reasoning": "QJo at 7BB is in shove range - broadway hand, must shove or fold, not call"
+          },
+          "actual_action": "MISSED",
+          "mode": "auto"
+        }
+      ]
+    }
+  ]
+}

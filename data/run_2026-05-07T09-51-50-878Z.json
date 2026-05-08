@@ -1,0 +1,2066 @@
+{
+  "meta": {
+    "file": "run_2026-05-07T09-51-50-878Z.json",
+    "timestamp": "2026-05-07T09:51:50.878Z",
+    "ai": true,
+    "agent": "claude-live",
+    "mode": "auto",
+    "model": null,
+    "hands": 5,
+    "decisions": 6,
+    "wins": 0,
+    "losses": 2
+  },
+  "hands": [
+    {
+      "handId": 1,
+      "holeCards": [
+        "Td",
+        "9h"
+      ],
+      "finalBoard": [
+        "Ad",
+        "Jh",
+        "2s",
+        "9d",
+        "8h"
+      ],
+      "showdownCards": {
+        "sewer": [
+          "Ks",
+          "Kd"
+        ],
+        "sigmasquirrel": [
+          "Kd",
+          "Qc"
+        ],
+        "lee siuuuuu": [
+          "Ac",
+          "3c"
+        ],
+        "koreasex": [
+          "6c",
+          "7c"
+        ],
+        "NomuH523": [
+          "3h",
+          "4h"
+        ],
+        "modric": [
+          "Qs",
+          "Kh"
+        ],
+        "xtt": [
+          "9c",
+          "8c"
+        ]
+      },
+      "startedAt": "2026-05-07T09:56:40.001Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T09:56:40.001Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 0,
+            "holeCards": [
+              "Td",
+              "9h"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 186
+              },
+              "lAM2nx5Bf6": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 230
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 68
+              },
+              "CcFQ169_nL": {
+                "winCount": 13,
+                "quitCount": 1,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 103,
+                "nPY": "<D>"
+              },
+              "5PNNBGysDx": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 46,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "inGame",
+                "name": "xtt",
+                "stack": 95,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 129,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 25,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                4,
+                "cT6AjjjuZ6"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                6,
+                "5PNNBGysDx"
+              ],
+              [
+                7,
+                "N9feNSu4uJ"
+              ],
+              [
+                8,
+                "zGP80trhen"
+              ],
+              [
+                9,
+                "CcFQ169_nL"
+              ],
+              [
+                10,
+                "lAM2nx5Bf6"
+              ]
+            ],
+            "tableBets": {
+              "x-PQjECyX4": 30,
+              "5PNNBGysDx": 2,
+              "N9feNSu4uJ": 30,
+              "zGP80trhen": 68,
+              "CcFQ169_nL": 30,
+              "cT6AjjjuZ6": 30
+            },
+            "cRPI": [
+              "zGP80trhen"
+            ],
+            "callAmount": 25,
+            "bigBlind": 2,
+            "showdownCards": {
+              "sewer": [
+                "Ks",
+                "Kd"
+              ],
+              "sigmasquirrel": [
+                "Ac",
+                "9s"
+              ],
+              "lee siuuuuu": [
+                "Ac",
+                "3c"
+              ],
+              "koreasex": [
+                "2s",
+                "As"
+              ],
+              "NomuH523": [
+                "3h",
+                "4h"
+              ],
+              "modric": [
+                "9c",
+                "Qc"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "",
+            "raw": "",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "Timeout fallback"
+          },
+          "actual_action": "FOLD",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "BREAK_EVEN",
+      "stackChange": 0
+    },
+    {
+      "handId": 2,
+      "holeCards": [
+        "7d",
+        "9s"
+      ],
+      "finalBoard": [
+        "7s",
+        "7h",
+        "Qs",
+        "Ah",
+        "4s"
+      ],
+      "showdownCards": {
+        "xtt": [
+          "Tc",
+          "Qc"
+        ],
+        "modric": [
+          "Qd",
+          "Js"
+        ],
+        "NomuH523": [
+          "7c",
+          "4c"
+        ]
+      },
+      "startedAt": "2026-05-07T09:57:53.034Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T09:57:53.034Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 0,
+            "holeCards": [
+              "7d",
+              "9s"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 95
+              },
+              "lAM2nx5Bf6": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 230
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "winCount": 13,
+                "quitCount": 1,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 12,
+                "nPY": "<D>"
+              },
+              "5PNNBGysDx": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 44,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "inGame",
+                "name": "xtt",
+                "stack": 450,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 26,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 25,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                4,
+                "cT6AjjjuZ6"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                6,
+                "5PNNBGysDx"
+              ],
+              [
+                7,
+                "N9feNSu4uJ"
+              ],
+              [
+                9,
+                "CcFQ169_nL"
+              ],
+              [
+                10,
+                "lAM2nx5Bf6"
+              ]
+            ],
+            "tableBets": {
+              "5PNNBGysDx": 1,
+              "N9feNSu4uJ": 2,
+              "CcFQ169_nL": 12,
+              "lAM2nx5Bf6": 12
+            },
+            "cRPI": [
+              "CcFQ169_nL",
+              "lAM2nx5Bf6"
+            ],
+            "callAmount": 12,
+            "bigBlind": 2,
+            "showdownCards": {}
+          },
+          "ai_metadata": {
+            "prompt": "{\"street\":\"pre-flop\",\"holeCards\":[\"7d\",\"9s\"],\"board\":[],\"pot\":0,\"callAmount\":12,\"heroStack\":25,\"stackBB\":13,\"bigBlind\":2,\"activePlayers\":7,\"totalPlayers\":7,\"players\":[{\"name\":\"Jivra\",\"stack\":25,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":true},{\"name\":\"sigmasquirrel\",\"stack\":95,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"xtt\",\"stack\":450,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Athar_Eshtiak\",\"stack\":44,\"bet\":\"1\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"koreasex\",\"stack\":26,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"modric\",\"stack\":12,\"bet\":\"12\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"NomuH523\",\"stack\":230,\"bet\":\"12\",\"status\":\"inGame\",\"isHero\":false}],\"tableBets\":{\"5PNNBGysDx\":1,\"N9feNSu4uJ\":2,\"CcFQ169_nL\":12,\"lAM2nx5Bf6\":12},\"availableActions\":[\"Call 12\",\"Raise\",\"Fold\"],\"handName\":null,\"pastHands\":[{\"holeCards\":[\"Td\",\"9h\"],\"decisions\":[\"FOLD\"]}],\"opponentTendencies\":{\"Jivra\":{\"foldPct\":0,\"betPct\":0},\"sigmasquirrel\":{\"foldPct\":0,\"betPct\":0},\"xtt\":{\"foldPct\":0,\"betPct\":50},\"Athar_Eshtiak\":{\"foldPct\":0,\"betPct\":100},\"koreasex\":{\"foldPct\":0,\"betPct\":100},\"modric\":{\"foldPct\":0,\"betPct\":100},\"NomuH523\":{\"foldPct\":0,\"betPct\":50}}}",
+            "raw": "{\"decision\":\"FOLD\",\"amount\":0,\"reasoning\":\"79o at 13BB facing 6BB raise — below shove range, folding to preserve stack for stronger spot.\"}",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "79o at 13BB facing 6BB raise — below shove range, folding to preserve stack for stronger spot."
+          },
+          "actual_action": "FOLD",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "BREAK_EVEN",
+      "stackChange": 0
+    },
+    {
+      "handId": 3,
+      "holeCards": [
+        "4h",
+        "Jd"
+      ],
+      "finalBoard": [
+        "Ks",
+        "Jc",
+        "Ad",
+        "9h",
+        "8d"
+      ],
+      "showdownCards": {
+        "xtt": [
+          "Qs",
+          "Ah"
+        ],
+        "koreasex": [
+          "6h",
+          "5s"
+        ]
+      },
+      "startedAt": "2026-05-07T09:59:54.774Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T09:59:54.774Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 0,
+            "holeCards": [
+              "4h",
+              "Jd"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 95
+              },
+              "lAM2nx5Bf6": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 498
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 13,
+                "quitCount": 2,
+                "id": "CcFQ169_nL",
+                "status": "waitingNextGameToEnter",
+                "name": "modric",
+                "stack": 100,
+                "nPY": true
+              },
+              "5PNNBGysDx": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 30,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "inGame",
+                "name": "xtt",
+                "stack": 220,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 14,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 25,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "ndc",
+                "hideAway": true
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "CcFQ169_nL"
+              ],
+              [
+                4,
+                "cT6AjjjuZ6"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                6,
+                "5PNNBGysDx"
+              ],
+              [
+                7,
+                "N9feNSu4uJ"
+              ],
+              [
+                10,
+                "lAM2nx5Bf6"
+              ]
+            ],
+            "tableBets": {
+              "N9feNSu4uJ": 14,
+              "lAM2nx5Bf6": 2,
+              "cT6AjjjuZ6": 2,
+              "x-PQjECyX4": 20
+            },
+            "cRPI": [
+              "x-PQjECyX4",
+              "N9feNSu4uJ"
+            ],
+            "callAmount": 2,
+            "bigBlind": 2,
+            "showdownCards": {}
+          },
+          "ai_metadata": {
+            "prompt": "",
+            "raw": "",
+            "decision": "FOLD",
+            "amount": 0,
+            "reasoning": "Timeout fallback"
+          },
+          "actual_action": "FOLD",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "BREAK_EVEN",
+      "stackChange": 0
+    },
+    {
+      "handId": 4,
+      "holeCards": [
+        "4d",
+        "2c"
+      ],
+      "finalBoard": [
+        "3c",
+        "9c",
+        "Qh",
+        "Qd",
+        "Kc"
+      ],
+      "showdownCards": {
+        "modric": [
+          "2h",
+          "Kc"
+        ],
+        "NomuH523": [
+          "As",
+          "9s"
+        ],
+        "sigmasquirrel": [
+          "Ks",
+          "Ac"
+        ],
+        "ivey12": [
+          "Jh",
+          "7c"
+        ],
+        "Athar_Eshtiak": [
+          "Qs",
+          "7h"
+        ],
+        "Mr. EightBall": [
+          "Tc",
+          "9h"
+        ],
+        "Dohman": [
+          "Qd",
+          "As"
+        ],
+        "Lo04": [
+          "Qs",
+          "As"
+        ]
+      },
+      "startedAt": "2026-05-07T10:24:24.682Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T10:24:24.682Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [
+              "3c",
+              "9c",
+              "Qh",
+              "Qd"
+            ],
+            "pot": 8,
+            "holeCards": [
+              "4d",
+              "2c"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 0
+              },
+              "lAM2nx5Bf6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 540,
+                "qNH": "u"
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 15,
+                "quitCount": 3,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 91,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149195458
+              },
+              "5PNNBGysDx": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "waitBB": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 22,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "ndc",
+                "hideAway": true
+              },
+              "C4EmYSI3iT": {
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 171,
+                "nPY": "<D>"
+              },
+              "p6lUDjKwcv": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 50,
+                "nPY": "<D>",
+                "disconnectedSince": 1778149407863
+              },
+              "k9AKu9D5Lj": {
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "k9AKu9D5Lj",
+                "status": "inGame",
+                "name": "Mr. EightBall",
+                "stack": 95,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "1aHiL0tLwi": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "1aHiL0tLwi",
+                "status": "inGame",
+                "name": "Lo04",
+                "stack": 166,
+                "nPY": "<D>",
+                "disconnectedSince": 1778149421007,
+                "dAC": false
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                7,
+                "k9AKu9D5Lj"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                10,
+                "1aHiL0tLwi"
+              ]
+            ],
+            "tableBets": {
+              "1aHiL0tLwi": "<D>",
+              "Hodd3D4otV": "check",
+              "C4EmYSI3iT": 8,
+              "k9AKu9D5Lj": 20
+            },
+            "cRPI": [
+              "k9AKu9D5Lj"
+            ],
+            "callAmount": 0,
+            "bigBlind": 2,
+            "showdownCards": {
+              "modric": [
+                "2h",
+                "Kc"
+              ],
+              "NomuH523": [
+                "As",
+                "9s"
+              ],
+              "sigmasquirrel": [
+                "Ks",
+                "Ac"
+              ],
+              "ivey12": [
+                "Jh",
+                "7c"
+              ],
+              "Athar_Eshtiak": [
+                "Qs",
+                "7h"
+              ],
+              "Mr. EightBall": [
+                "Tc",
+                "9h"
+              ],
+              "Dohman": [
+                "Qd",
+                "As"
+              ],
+              "Lo04": [
+                "Qs",
+                "As"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "",
+            "raw": "",
+            "decision": "CHECK",
+            "amount": 0,
+            "reasoning": "Timeout fallback"
+          },
+          "actual_action": "CHECK",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "LOSS",
+      "stackChange": -2
+    },
+    {
+      "handId": 5,
+      "holeCards": [
+        "Jc",
+        "Kc"
+      ],
+      "finalBoard": [
+        "7h",
+        "Td",
+        "3d",
+        "Qd"
+      ],
+      "showdownCards": {
+        "ivey12": [
+          "Jh",
+          "Kd"
+        ],
+        "Dohman": [
+          "5c",
+          "Ad"
+        ],
+        "CosmicBob": [
+          "Tc",
+          "Qd"
+        ]
+      },
+      "startedAt": "2026-05-07T10:31:27.250Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T10:31:27.250Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 1,
+            "holeCards": [
+              "Jc",
+              "Kc"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 0
+              },
+              "lAM2nx5Bf6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 540,
+                "qNH": "u"
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 15,
+                "quitCount": 3,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 91,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149195458
+              },
+              "5PNNBGysDx": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "waitBB": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 21,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "ndc",
+                "hideAway": true
+              },
+              "C4EmYSI3iT": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 147,
+                "nPY": "<D>"
+              },
+              "p6lUDjKwcv": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 56,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>"
+              },
+              "k9AKu9D5Lj": {
+                "winCount": 6,
+                "quitCount": 0,
+                "id": "k9AKu9D5Lj",
+                "status": "inGame",
+                "name": "Mr. EightBall",
+                "stack": 139,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "1aHiL0tLwi": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "1aHiL0tLwi",
+                "status": "standingUp",
+                "name": "Lo04",
+                "stack": 166,
+                "nPY": "<D>",
+                "disconnectedSince": 1778149421007,
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "disconnectedSince": 1778149845520
+              },
+              "pQ5FBmLGiC": {
+                "winCount": 2,
+                "quitCount": 2,
+                "id": "pQ5FBmLGiC",
+                "status": "inGame",
+                "name": "CosmicBob",
+                "stack": 52,
+                "nPY": "<D>"
+              },
+              "l9um21t3nv": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "l9um21t3nv",
+                "status": "inGame",
+                "name": "hahahah11",
+                "stack": 70,
+                "nPY": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149680200
+              },
+              "4K60yBvzG-": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4K60yBvzG-",
+                "status": "inGame",
+                "name": "阿达我去",
+                "stack": 80,
+                "nPY": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                4,
+                "4K60yBvzG-"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                7,
+                "k9AKu9D5Lj"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                9,
+                "pQ5FBmLGiC"
+              ],
+              [
+                10,
+                "1aHiL0tLwi"
+              ]
+            ],
+            "tableBets": {
+              "4K60yBvzG-": 1,
+              "k9AKu9D5Lj": 2,
+              "Hodd3D4otV": 2,
+              "pQ5FBmLGiC": 2,
+              "C4EmYSI3iT": 9
+            },
+            "cRPI": [
+              "C4EmYSI3iT"
+            ],
+            "callAmount": 0,
+            "bigBlind": 2,
+            "showdownCards": {
+              "ivey12": [
+                "Jh",
+                "Kd"
+              ],
+              "Dohman": [
+                "5c",
+                "Ad"
+              ],
+              "CosmicBob": [
+                "Tc",
+                "Qd"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "{\"street\":\"pre-flop\",\"holeCards\":[\"Jc\",\"Kc\"],\"board\":[],\"pot\":1,\"callAmount\":0,\"heroStack\":21,\"stackBB\":11,\"bigBlind\":2,\"activePlayers\":9,\"totalPlayers\":9,\"players\":[{\"name\":\"Jivra\",\"stack\":21,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":true},{\"name\":\"Bolern\",\"stack\":100,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"ivey12\",\"stack\":147,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"阿达我去\",\"stack\":80,\"bet\":\"1\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"xtt\",\"stack\":239,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"Mr. EightBall\",\"stack\":139,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Dohman\",\"stack\":56,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"CosmicBob\",\"stack\":52,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Lo04\",\"stack\":166,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false}],\"tableBets\":{\"4K60yBvzG-\":1,\"k9AKu9D5Lj\":2,\"Hodd3D4otV\":2,\"pQ5FBmLGiC\":2},\"availableActions\":[\"Check\",\"Raise\",\"Fold\"],\"handName\":null,\"pastHands\":[{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]},{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]},{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]}],\"opponentTendencies\":{\"Jivra\":{\"foldPct\":0,\"betPct\":40},\"sigmasquirrel\":{\"foldPct\":0,\"betPct\":0},\"xtt\":{\"foldPct\":0,\"betPct\":20},\"Athar_Eshtiak\":{\"foldPct\":0,\"betPct\":67},\"koreasex\":{\"foldPct\":0,\"betPct\":100},\"modric\":{\"foldPct\":0,\"betPct\":100},\"NomuH523\":{\"foldPct\":0,\"betPct\":67},\"Bolern\":{\"foldPct\":0,\"betPct\":0},\"ivey12\":{\"foldPct\":0,\"betPct\":50},\"Mr. EightBall\":{\"foldPct\":0,\"betPct\":100},\"Dohman\":{\"foldPct\":0,\"betPct\":0},\"Lo04\":{\"foldPct\":0,\"betPct\":50}}}",
+            "raw": "{\"decision\":\"RAISE\",\"amount\":22,\"reasoning\":\"KJc at 11BB - suited premium, shove range. Build pot now rather than see cheap flop with 7 players.\"}",
+            "decision": "RAISE",
+            "amount": 22,
+            "reasoning": "KJc at 11BB - suited premium, shove range. Build pot now rather than see cheap flop with 7 players."
+          },
+          "actual_action": "RAISE",
+          "mode": "auto"
+        },
+        {
+          "timestamp": "2026-05-07T10:32:20.090Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 1,
+            "holeCards": [
+              "Jc",
+              "Kc"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 0
+              },
+              "lAM2nx5Bf6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 540,
+                "qNH": "u"
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 15,
+                "quitCount": 3,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 91,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149195458
+              },
+              "5PNNBGysDx": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "waitBB": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 21,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "C4EmYSI3iT": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 147,
+                "nPY": "<D>"
+              },
+              "p6lUDjKwcv": {
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 56,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>"
+              },
+              "k9AKu9D5Lj": {
+                "winCount": 6,
+                "quitCount": 0,
+                "id": "k9AKu9D5Lj",
+                "status": "inGame",
+                "name": "Mr. EightBall",
+                "stack": 139,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "1aHiL0tLwi": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "1aHiL0tLwi",
+                "status": "standingUp",
+                "name": "Lo04",
+                "stack": 166,
+                "nPY": "<D>",
+                "disconnectedSince": 1778149421007,
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "disconnectedSince": 1778149845520
+              },
+              "pQ5FBmLGiC": {
+                "winCount": 2,
+                "quitCount": 2,
+                "id": "pQ5FBmLGiC",
+                "status": "inGame",
+                "name": "CosmicBob",
+                "stack": 52,
+                "nPY": "<D>",
+                "dAC": false
+              },
+              "l9um21t3nv": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "l9um21t3nv",
+                "status": "inGame",
+                "name": "hahahah11",
+                "stack": 70,
+                "nPY": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149680200
+              },
+              "4K60yBvzG-": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4K60yBvzG-",
+                "status": "inGame",
+                "name": "阿达我去",
+                "stack": 80,
+                "nPY": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                4,
+                "4K60yBvzG-"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                7,
+                "k9AKu9D5Lj"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                9,
+                "pQ5FBmLGiC"
+              ],
+              [
+                10,
+                "1aHiL0tLwi"
+              ]
+            ],
+            "tableBets": {
+              "4K60yBvzG-": 1,
+              "k9AKu9D5Lj": 9,
+              "Hodd3D4otV": 2,
+              "pQ5FBmLGiC": 2,
+              "C4EmYSI3iT": 9
+            },
+            "cRPI": [
+              "C4EmYSI3iT",
+              "k9AKu9D5Lj"
+            ],
+            "callAmount": 7,
+            "bigBlind": 2,
+            "showdownCards": {
+              "ivey12": [
+                "Jh",
+                "Kd"
+              ],
+              "Dohman": [
+                "5c",
+                "Ad"
+              ],
+              "CosmicBob": [
+                "Tc",
+                "Qd"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "{\"street\":\"pre-flop\",\"holeCards\":[\"Jc\",\"Kc\"],\"board\":[],\"pot\":1,\"callAmount\":7,\"heroStack\":21,\"stackBB\":11,\"bigBlind\":2,\"activePlayers\":9,\"totalPlayers\":9,\"players\":[{\"name\":\"Jivra\",\"stack\":21,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":true},{\"name\":\"Bolern\",\"stack\":100,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"ivey12\",\"stack\":147,\"bet\":\"9\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"阿达我去\",\"stack\":80,\"bet\":\"1\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"xtt\",\"stack\":239,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"Mr. EightBall\",\"stack\":139,\"bet\":\"9\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Dohman\",\"stack\":56,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"CosmicBob\",\"stack\":52,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"Lo04\",\"stack\":166,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false}],\"tableBets\":{\"4K60yBvzG-\":1,\"k9AKu9D5Lj\":9,\"Hodd3D4otV\":2,\"pQ5FBmLGiC\":2,\"C4EmYSI3iT\":9},\"availableActions\":[\"Call 7\",\"Raise\",\"Fold\"],\"handName\":null,\"pastHands\":[{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]},{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]},{\"holeCards\":[\"4d\",\"2c\"],\"decisions\":[\"CHECK\"]}],\"opponentTendencies\":{\"Jivra\":{\"foldPct\":0,\"betPct\":50},\"sigmasquirrel\":{\"foldPct\":0,\"betPct\":0},\"xtt\":{\"foldPct\":0,\"betPct\":17},\"Athar_Eshtiak\":{\"foldPct\":0,\"betPct\":67},\"koreasex\":{\"foldPct\":0,\"betPct\":100},\"modric\":{\"foldPct\":0,\"betPct\":100},\"NomuH523\":{\"foldPct\":0,\"betPct\":67},\"Bolern\":{\"foldPct\":0,\"betPct\":0},\"ivey12\":{\"foldPct\":0,\"betPct\":67},\"Mr. EightBall\":{\"foldPct\":0,\"betPct\":100},\"Dohman\":{\"foldPct\":0,\"betPct\":0},\"Lo04\":{\"foldPct\":0,\"betPct\":33},\"阿达我去\":{\"foldPct\":0,\"betPct\":100},\"CosmicBob\":{\"foldPct\":0,\"betPct\":100}}}",
+            "raw": "{\"decision\":\"RAISE\",\"amount\":21,\"reasoning\":\"KJc vs 3.5BB open at 11BB - reshove, too strong to fold and too short to call/fold post-flop\"}",
+            "decision": "RAISE",
+            "amount": 21,
+            "reasoning": "KJc vs 3.5BB open at 11BB - reshove, too strong to fold and too short to call/fold post-flop"
+          },
+          "actual_action": "RAISE",
+          "mode": "auto"
+        }
+      ],
+      "outcome": "LOSS",
+      "stackChange": -2
+    },
+    {
+      "handId": 6,
+      "holeCards": [
+        "Ks",
+        "Ah"
+      ],
+      "startedAt": "2026-05-07T10:36:44.873Z",
+      "decisions": [
+        {
+          "timestamp": "2026-05-07T10:36:44.873Z",
+          "street": "pre-flop",
+          "game_state": {
+            "board": [],
+            "pot": 2,
+            "holeCards": [
+              "Ks",
+              "Ah"
+            ],
+            "handName": null,
+            "players": {
+              "4R4vHAfKij": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4R4vHAfKij",
+                "status": "standingUp",
+                "name": "fish01",
+                "stack": 57,
+                "disconnectedSince": 1778146995987,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "JmhZF_rpoZ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "JmhZF_rpoZ",
+                "status": "standingUp",
+                "name": "ddytre",
+                "stack": 54,
+                "disconnectedSince": 1778146909513,
+                "dAC": false,
+                "qNH": "u"
+              },
+              "cT6AjjjuZ6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 5,
+                "quitCount": 0,
+                "id": "cT6AjjjuZ6",
+                "status": "inGame",
+                "name": "sigmasquirrel",
+                "stack": 0
+              },
+              "lAM2nx5Bf6": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 4,
+                "quitCount": 0,
+                "id": "lAM2nx5Bf6",
+                "status": "inGame",
+                "name": "NomuH523",
+                "stack": 540,
+                "qNH": "u"
+              },
+              "LAgXbVD0JF": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "LAgXbVD0JF",
+                "status": "inGame",
+                "name": "sewer",
+                "stack": 0
+              },
+              "zGP80trhen": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "zGP80trhen",
+                "status": "inGame",
+                "name": "lee siuuuuu",
+                "stack": 0
+              },
+              "CcFQ169_nL": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 15,
+                "quitCount": 3,
+                "id": "CcFQ169_nL",
+                "status": "inGame",
+                "name": "modric",
+                "stack": 91,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149195458
+              },
+              "5PNNBGysDx": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "5PNNBGysDx",
+                "status": "inGame",
+                "name": "Athar_Eshtiak",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "x-PQjECyX4": {
+                "winCount": 3,
+                "quitCount": 0,
+                "id": "x-PQjECyX4",
+                "status": "standingUp",
+                "name": "xtt",
+                "stack": 239,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "waitBB": "<D>"
+              },
+              "N9feNSu4uJ": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 2,
+                "quitCount": 0,
+                "id": "N9feNSu4uJ",
+                "status": "inGame",
+                "name": "koreasex",
+                "stack": 0,
+                "nPY": "<D>"
+              },
+              "Hodd3D4otV": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "Hodd3D4otV",
+                "status": "inGame",
+                "name": "Jivra",
+                "sitAsAway": false,
+                "stack": 18,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>"
+              },
+              "C4EmYSI3iT": {
+                "winCount": 7,
+                "quitCount": 0,
+                "id": "C4EmYSI3iT",
+                "status": "inGame",
+                "name": "ivey12",
+                "stack": 162,
+                "nPY": "<D>"
+              },
+              "p6lUDjKwcv": {
+                "winCount": 7,
+                "quitCount": 0,
+                "id": "p6lUDjKwcv",
+                "status": "inGame",
+                "name": "Dohman",
+                "stack": 100,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>"
+              },
+              "k9AKu9D5Lj": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 6,
+                "quitCount": 0,
+                "id": "k9AKu9D5Lj",
+                "status": "inGame",
+                "name": "Mr. EightBall",
+                "stack": 120,
+                "nPY": "<D>",
+                "disconnectedSince": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u"
+              },
+              "1aHiL0tLwi": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "1aHiL0tLwi",
+                "status": "standingUp",
+                "name": "Lo04",
+                "stack": 166,
+                "nPY": "<D>",
+                "disconnectedSince": 1778149421007,
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "qNH": "u"
+              },
+              "UviSjlR9gq": {
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "UviSjlR9gq",
+                "status": "standingUp",
+                "name": "Bolern",
+                "stack": 100,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "disconnectedSince": 1778149845520
+              },
+              "pQ5FBmLGiC": {
+                "winCount": 3,
+                "quitCount": 2,
+                "id": "pQ5FBmLGiC",
+                "status": "inGame",
+                "name": "CosmicBob",
+                "stack": 51,
+                "nPY": "<D>",
+                "dAC": false,
+                "sUNH": "<D>",
+                "hideAway": "<D>",
+                "waitBB": "<D>"
+              },
+              "l9um21t3nv": {
+                "0": "<",
+                "1": "D",
+                "2": ">",
+                "winCount": 0,
+                "quitCount": 0,
+                "id": "l9um21t3nv",
+                "status": "inGame",
+                "name": "hahahah11",
+                "stack": 70,
+                "nPY": "<D>",
+                "qNH": "u",
+                "disconnectedSince": 1778149680200
+              },
+              "4K60yBvzG-": {
+                "winCount": 1,
+                "quitCount": 0,
+                "id": "4K60yBvzG-",
+                "status": "inGame",
+                "name": "阿达我去",
+                "stack": 43,
+                "nPY": "<D>"
+              }
+            },
+            "seats": [
+              [
+                1,
+                "Hodd3D4otV"
+              ],
+              [
+                2,
+                "UviSjlR9gq"
+              ],
+              [
+                3,
+                "C4EmYSI3iT"
+              ],
+              [
+                4,
+                "4K60yBvzG-"
+              ],
+              [
+                5,
+                "x-PQjECyX4"
+              ],
+              [
+                8,
+                "p6lUDjKwcv"
+              ],
+              [
+                9,
+                "pQ5FBmLGiC"
+              ]
+            ],
+            "tableBets": {
+              "4K60yBvzG-": 1,
+              "p6lUDjKwcv": 2,
+              "Hodd3D4otV": 2
+            },
+            "cRPI": [],
+            "callAmount": 0,
+            "bigBlind": 2,
+            "showdownCards": {
+              "ivey12": [
+                "6s",
+                "2c"
+              ],
+              "阿达我去": [
+                "Jh",
+                "Th"
+              ],
+              "Dohman": [
+                "5d",
+                "4s"
+              ],
+              "CosmicBob": [
+                "Jc",
+                "5c"
+              ]
+            }
+          },
+          "ai_metadata": {
+            "prompt": "{\"street\":\"pre-flop\",\"holeCards\":[\"Ks\",\"Ah\"],\"board\":[],\"pot\":2,\"callAmount\":0,\"heroStack\":18,\"stackBB\":9,\"bigBlind\":2,\"activePlayers\":7,\"totalPlayers\":7,\"players\":[{\"name\":\"Jivra\",\"stack\":18,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":true},{\"name\":\"Bolern\",\"stack\":100,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"ivey12\",\"stack\":162,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"阿达我去\",\"stack\":43,\"bet\":\"1\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"xtt\",\"stack\":239,\"bet\":\"0\",\"status\":\"standingUp\",\"isHero\":false},{\"name\":\"Dohman\",\"stack\":100,\"bet\":\"2\",\"status\":\"inGame\",\"isHero\":false},{\"name\":\"CosmicBob\",\"stack\":51,\"bet\":\"0\",\"status\":\"inGame\",\"isHero\":false}],\"tableBets\":{\"4K60yBvzG-\":1,\"p6lUDjKwcv\":2,\"Hodd3D4otV\":2},\"availableActions\":[\"Check\",\"Raise\",\"Fold\"],\"handName\":null,\"pastHands\":[{\"holeCards\":[\"Jc\",\"Kc\"],\"decisions\":[\"RAISE\",\"RAISE\"]},{\"holeCards\":[\"Jc\",\"Kc\"],\"decisions\":[\"RAISE\",\"RAISE\"]},{\"holeCards\":[\"Jc\",\"Kc\"],\"decisions\":[\"RAISE\",\"RAISE\"]}],\"opponentTendencies\":{\"Jivra\":{\"foldPct\":0,\"betPct\":57},\"sigmasquirrel\":{\"foldPct\":0,\"betPct\":0},\"xtt\":{\"foldPct\":0,\"betPct\":14},\"Athar_Eshtiak\":{\"foldPct\":0,\"betPct\":67},\"koreasex\":{\"foldPct\":0,\"betPct\":100},\"modric\":{\"foldPct\":0,\"betPct\":100},\"NomuH523\":{\"foldPct\":0,\"betPct\":67},\"Bolern\":{\"foldPct\":0,\"betPct\":0},\"ivey12\":{\"foldPct\":0,\"betPct\":50},\"Mr. EightBall\":{\"foldPct\":0,\"betPct\":100},\"Dohman\":{\"foldPct\":0,\"betPct\":25},\"Lo04\":{\"foldPct\":0,\"betPct\":33},\"阿达我去\":{\"foldPct\":0,\"betPct\":100},\"CosmicBob\":{\"foldPct\":0,\"betPct\":67}}}",
+            "raw": "{\"decision\":\"RAISE\",\"amount\":19,\"reasoning\":\"AKo at 9BB is premium - shove all-in, top of range\"}",
+            "decision": "RAISE",
+            "amount": 19,
+            "reasoning": "AKo at 9BB is premium - shove all-in, top of range"
+          },
+          "actual_action": "RAISE",
+          "mode": "auto"
+        }
+      ]
+    }
+  ]
+}

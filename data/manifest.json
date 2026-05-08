@@ -1,5 +1,54 @@
 [
   {
+    "file": "run_2026-05-07T10-52-18-069Z.json",
+    "timestamp": "2026-05-07T10:52:18.070Z",
+    "ai": true,
+    "agent": "file",
+    "agentLabel": "codex",
+    "mode": "auto",
+    "model": null,
+    "hands": 4,
+    "decisions": 11,
+    "wins": 0,
+    "losses": 3
+  },
+  {
+    "file": "run_2026-05-07T10-50-59-156Z.json",
+    "timestamp": "2026-05-07T10:50:59.157Z",
+    "ai": true,
+    "agent": "claude-live",
+    "mode": "auto",
+    "model": null,
+    "hands": 6,
+    "decisions": 9,
+    "wins": 0,
+    "losses": 3
+  },
+  {
+    "file": "run_2026-05-07T10-38-34-843Z.json",
+    "timestamp": "2026-05-07T10:38:34.844Z",
+    "ai": true,
+    "agent": "claude-live",
+    "mode": "auto",
+    "model": null,
+    "hands": 2,
+    "decisions": 2,
+    "wins": 0,
+    "losses": 1
+  },
+  {
+    "file": "run_2026-05-07T09-51-50-878Z.json",
+    "timestamp": "2026-05-07T09:51:50.878Z",
+    "ai": true,
+    "agent": "claude-live",
+    "mode": "auto",
+    "model": null,
+    "hands": 6,
+    "decisions": 7,
+    "wins": 0,
+    "losses": 2
+  },
+  {
     "file": "run_2026-05-06T03-49-13-935Z.json",
     "timestamp": "2026-05-06T03:49:13.935Z",
     "ai": true,

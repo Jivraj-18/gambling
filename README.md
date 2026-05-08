@@ -26,6 +26,9 @@ node bot.js --ai
 # AI auto-click — Gemini decides and clicks for you
 node bot.js --ai --mode=auto
 
+# Auto-click with local heuristic agent (no API key)
+node bot.js --ai --mode=auto --agent=heuristic
+
 # Open a specific game room directly
 node bot.js --ai --url=https://www.pokernow.club/games/YOUR_ROOM_ID
 
@@ -38,6 +41,7 @@ node bot.js --ai --model=gemini-2.5-pro
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--ai` | off | Enable Gemini AI advisor |
+| `--agent` | `gemini` (when `--ai` is set) | `gemini` or `heuristic` |
 | `--mode` | `advisory` | `advisory` (suggest only) or `auto` (click for you) |
 | `--model` | `gemini-3.1-pro-preview` | Gemini model to use |
 | `--url` | `https://www.pokernow.club` | URL to open on launch |
@@ -113,4 +117,5 @@ Open `http://localhost:3000` (or `http://localhost:8000`).
 - **Run selector** — dropdown shows all sessions with timestamp, AI/Manual badge, and move count
 - **Game panel** — board cards, pot, player positions and stacks
 - **AI panel** — shown only for AI runs; displays decision badge, reasoning, and expandable prompt/raw response
+- **Domain expert log** — `domain-expert-log.md` captures each decision with Q&A and context
 - **Controls** — Prev / Play-Pause / Next / End + speed slider (0.25× – 4×)
